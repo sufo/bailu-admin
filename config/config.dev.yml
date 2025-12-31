@@ -1,0 +1,231 @@
+version: 1.0.0
+
+server:
+  # debug开发环境 test测试环境 release线上环境  同gin [/home/sufo/workspace/go/gopath/pkg/mod/github.com/gin-gonic/gin@v1.7.7/mode.go]
+  mode : debug
+  # 服务器ip，默认使用 0.0.0.0
+  host : 0.0.0.0
+  # 服务名称
+  name: Bailu
+  # 端口
+  port: 8081
+  read-timeout: 10
+  writer-timeout: 30
+  oss-type: local    # 控制oss选择走本期还是 七牛等其他仓 自行增加其他oss仓可以在 server/utils/upload/upload.go 中 NewOss函数配置
+#  use-multipoint : false
+  use-multi-device: true # 允许pc和mobile phone同时登录
+  locale: 'zh-CN'
+  time-zone: 'Asia/Shanghai'
+  use-redis: true
+  # 证书路径
+  cert-file: ''
+  # 证书密钥
+  key-file: ''
+# 是否启用swagger
+swagger: true
+
+# captcha configuration
+captcha:
+  # 存储方式 （支持：memory/redis/buntDB）
+  store: "redis"
+  # 数字长度 （在验证码为digit有效）
+  length: 6
+  # 图片宽度
+  width: 240
+  # 图片高度
+  height: 80
+  # redis数据库(如果存储方式是redis，则指定存储的数据库)
+  redis-db: 10
+  # 存储键名前缀
+  prefix: "CAPTCHA_"
+  # 过期时间
+  expire: 180  # 秒
+  # 验证码类型（#audio,string,math,chinese,digit 暂只支持string,math、digit）
+  captcha-type: 'math'
+
+
+# db connect configuration
+datasource:
+  dbType: 'mysql'
+#  debug: true
+  table-prefix: ''
+  max-idle-conns: 10
+  max-open-conns: 100
+  # 设置连接可以重用的最长时间(单位：秒)
+  max-lifetime: 7200
+  EnableAutoMigrate: false
+  # 数据库类型 mysql，sqlite3， postgres
+  mysql:
+    driver: mysql
+    host : 127.0.0.1
+    port : 3306
+    username: test
+    password: 123456
+    db-name:  bailu-admin
+    params: charset=utf8&parseTime=True&loc=Local&timeout=1000ms
+    # 数据库连接字符串 mysql 缺省信息 charset=utf8&parseTime=True&loc=Local&timeout=1000ms
+    # source: user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8&parseTime=True&loc=Local&timeout=1000ms
+
+#  log-mode: false
+  #是否通过zap写入日志
+  log-zap: false
+
+# 日志
+zap:
+  level: debug  #日志级别 debug info warn exception panic fatal等
+  format: console  #输出格式 json / console
+  prefix: '[bailu]' #前缀
+  link-name: 'latest_log'
+  director: 'log'
+  show-line: true
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true
+  clean-days-ago: 30 # 清理多少天之前的日志 单位：天
+# 日志切割
+#lumberjack:
+#  filename:   # 文件路径
+#  maxsize: 128	  # 单个文件最大尺寸，默认单位M
+#  maxBackups: 30 #保留旧文件的最大个数
+#  maxage: 30		#最大时间，默认单位 day
+#  LocalTime: true	# 使用本地时间
+#  compress: true	# 是否压缩 disabled by default
+
+# 服务监控(GOPS:https://github.com/google/gops)
+monitor:
+  # 是否启用
+  enable: false
+  # HTTP的监听地址和端口
+  addr: 127.0.0.1:16060
+  # 配置文件目录(为空则使用默认目录)
+  config-dir: ""
+
+# 请求频率限制
+rate-limiter:
+# 是否启用
+  enable: true
+  # 每分钟每个用户允许的最大请求数量
+  count: 30
+  # redis数据库(如果存储方式是redis，则指定存储的数据库)
+  redisDB: 0
+
+upload:
+  model: local  # 上传模式 "local"|"cloud"|"other"
+  type: '' # 上传类型：
+  # 限制表单上传大小 MB
+  max-multipart-memory: 500
+  mime-type: 'jpeg,png,gif,xls,xlsx,doc,docx,ppt,pptx,rar,zip,pdf,txt,mp4,avi,flv,rmvb,mp3,otf,ttf'
+
+  # qiniu configuration (请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址)
+  qiniu:
+    region: ZoneHuaDong
+    bucket: ""
+    img-path: ""
+    use-https: false
+    access-key: ""
+    secret-key: ""
+    use-cdn-domains: false
+
+# 本地
+local:
+  path: "/upload"
+  dir: assets/uploads
+
+cors:
+# 是否启用
+  enable: true
+  # 允许跨域请求的域名列表(*表示全部允许)
+  allow-origins: ["*"]
+  # 允许跨域请求的请求方式列表
+  allow-methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+  # 允许客户端与跨域请求一起使用的非简单标头的列表
+  allow-headers: []
+  # 请求是否可以包含cookie，HTTP身份验证或客户端SSL证书等用户凭据
+  allow-credentials: true
+  # 可以缓存预检请求结果的时间（以秒为单位）
+  max-age: 7200
+
+gzip:
+# 是否启用
+  enable: false
+  # 排除的文件扩展名
+  excluded-ext: [".png", ".gif", ".jpeg", ".jpg"]
+  # 排除的请求路径
+  excluded-paths: []
+
+jwt:
+  # 是否启用
+  enable: true
+  header: Authorization
+  # 令牌前缀
+  token-start-with: Bearer
+  # 签名方式(支持：HS512/HS384/HS512)
+  signing-method: HS512
+  # 签名key
+  signing-key: bailu
+  # 过期时间（单位秒）
+  expired: 7200
+  # 存储(支持：file/redis)
+  store: redis
+  # 文件路径
+  #file-path: "data/jwt_auth.db"
+  # redis 数据库(如果存储方式是redis，则指定存储的数据库)
+  redis-db: 0
+  # 存储到 redis 数据库中的键名前缀
+  redis-prefix: auth_
+  # 在线用户key
+  online-key: "online-token:"
+  #token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
+  detect: 1800000
+  # 续期时间范围，默认1小时，单位毫秒
+  renew: 3600000
+
+sms:
+  app-key:  #app key ，可在控制台查询
+  app-secret:  #app secret ,可在控制台查询
+  sign-name:  #短信签名名称
+  template-code:  #短信模板CODE。
+  # 可用区域 https://help.aliyun.com/document_detail/40654.html?spm=a2c6h.13066369.0.0.54a17471cMLlhh
+  region-id: "cn-hangzhou"
+  expired: 300
+
+#密码加密传输，前端公钥加密，后端私钥解密
+signature:
+  key: bailu
+
+store:
+  # 存储类型（“redis/buntDB”,暂只支持redis）
+  # 如果server.use-redis==false, 那么这里的store-type无效，会使用buntDB
+  store-type: redis
+  enable-cache: true  # 如果为false，则禁用缓存
+  # https://groups.google.com/forum/?spm=a2c4e.11153987.0.0.1d6e4e37polahb#!forum/redis-db
+  # 这里redis全局只使用一个数据库
+  redis:
+    db: 0 # redis 数据库
+    addr: "127.0.0.1:6379"
+    password: ''
+  bunt-db:
+    # 文件路径
+    file-path: "data/jwt_auth.db"
+
+#初始化菜单
+menu:
+  enable: true
+  # 数据文件(yaml,也可以启动服务时使用 -menu 指定)
+  path: "config/menu.yml"
+
+oper-log:
+  enable: false
+  interval: 604800 # 3600 * 24 * 7  #清理周期 s
+
+casbin:
+  enable: true  #是否开启
+  debug: false # debug
+  model: "" #模型文件
+  # 是否启用定期自动加载策略
+  auto-load: false
+  # 定期自动加载策略时间间隔（单位秒）
+  auto-load-interval: 120
+
+rsa:
+  private-key: MIICXAIBAAKBgQCu92qawVPlbtaPIuREDBlvXpEe1YKor8q5Cy0UY10b9ExkjSeZXIo//UFIcfIbj/FlINYcmfsZmJtaZ8qBgA0o3PT9oMOqYsD0vWv9aq0W2n02sjJBljg6aUaXNFfdoDIZgfxboG2+quW5zWbAAfXvK2eX5yJNpe8cLkMNmWW4awIDAQABAoGAHVkxD45YNUb3RIE0ytlAtvak3wgvZ349QfbG9AGKz7KV0dP/jXEBW6Rue+lpFAh8FFuCrr+BaBS6ElsQk9JX4njMgGsNGVzNDVCb2ECqv5tiR/MKpM818co+QeFMeBBtTqV69N9OSD1ePeFFoqQcRS0A4OMR7hDDUzsTavVIz4ECQQDaaIHgzfwJCKATqeN4iq4aoLeQZS2ELGpk14RpA/5Tc05RpYi5+dFC1A7JKE7gGejlvu4sTqX78VDFKcFEVOwrAkEAzRTHxVO61b1nmpItxmCIsmdaPK80NfAfqAcdbHglU+63v6jzZ0ya9BX4b4p6UEAVnLrOeo6yhe7kBCHYCo0EwQJBANAjHfqVcmVNgfebRDqgtnCLzsNdmHXIOhAlznqhoqH2VaG7RcQtzX2JRxnuPtST/H3NaX5x6P5jJxztwM+UuocCQGiMSXNdRggksKZqEw/osodQjP4Wy2Ub7ud4CRX9AfqR3fbFKKDmuq/oa2hhjg1PPjVSPmTYTkZdDLzWjA6E6YECQAyyH2CUKuBfknQj+RNVyGA7oDYIE5d9QKJIOmJOVwH5HhcLykQiXIZ1Davs1U1y+6bIzERhotmAKGO3owbdV4o=

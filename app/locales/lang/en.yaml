@@ -1,0 +1,26 @@
+# Create by sufo
+# @Email ouamour@Gmail.com
+#
+# @Desc
+
+api:
+  successMessage: 'Operation success'
+  operationFailed: 'Operation failed'
+  errorTip: 'Error Tip'
+  existed: '%s existed'
+  deptNameExisted: 'department name existed'
+  AccountOrPwdErr: 'Incorrect account or password'
+  captchaError: 'fetch captcha failed'
+  userNotExit: 'use is not exist'
+  pwdIncorrect: 'Incorrect password'
+  hasChildMenus: 'Submenu exists and cannot be deleted'
+  cornInvalid: 'Invalid cron expression'
+tip:
+  captchaValid: 'invalid captcha'
+  captchaOk: 'Successfully obtained the verification code'
+  smsSendOk: 'SMS sent successfully'
+  smsCodeInvalid: 'invalid SMS'
+  pwdFormatTip: 'The password is %d-%d digits/characters/symbols, at least %d combinations'
+  pwdSetFailed: 'Password setting failed'
+  pwdLengthTip: "The password's length is at least %d"
+  noSupportAction: "Unsupported Operation"

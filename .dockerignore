@@ -1,0 +1,12 @@
+#Ignoring git and cache folders
+.git
+.cache
+
+#Ignoring all the markdown and class files
+*.md
+**/*.class
+
+//Ignoring all the tar file
+*.tar
+docker-compose.yml
+clean-log.sh

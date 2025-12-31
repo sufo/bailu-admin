@@ -1,0 +1,26 @@
+# Create by sufo
+# @Email ouamour@Gmail.com
+#  
+# @Desc
+
+api:
+  successMessage: '处理成功'
+  operationFailed: '处理失败'
+  errorTip: '错误提示'
+  existed: '%s已存在'
+  deptNameExisted: '部门名称已存在'
+  AccountOrPwdErr: '用户名或密码不正确'
+  captchaError: '获取验证码失败'
+  userNotExit: '用户不存在'
+  pwdIncorrect: '密码错误'
+  hasChildMenus: '存在子菜单,不允许删除'
+  cornInvalid: '无效的cron表达式'
+tip:
+  captchaValid: '无效的验证码'
+  captchaOk: '验证码获取成功'
+  smsSendOk: '短信验证码发送成功'
+  smsCodeInvalid: '短信验证码不正确'
+  pwdFormatTip: '密码为%d-%d位数字/字符/符号，至少%d种组合'
+  pwdSetFailed: '密码设置失败'
+  pwdLengthTip: "密码长至少%d位"
+  noSupportAction: "不支持的操作"

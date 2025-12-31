@@ -1,0 +1,153 @@
+#
+# 菜单配置初始化(服务启动时会进行数据检查，如果存在则不再初始化)
+- name: 仪表盘
+  path: '/dashboard'
+  component: 'dashboard/index'
+  meta:
+    icon: 'carbon:dashboard'
+  type: C
+  createBy: admin
+  status: 1
+- name: 系统管理
+  meta:
+    icon: 'ion:settings-outline'
+  path: '/system'
+  # component: Layout
+  type: M
+  createBy: admin
+  status: 1
+  children:
+    - name: 用户管理
+      component: 'sys/user/index'
+      path: user
+      meta:
+        icon: 'ic:round-manage-accounts'
+        permission: 'sys:user:list'
+      type: C
+      status: 1
+      createBy: admin
+      children:
+        - name: 查询
+          meta:
+            # 表示查看详情
+            permission: 'sys:user:query'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 新增
+          meta:
+            permission: 'sys:user:add'
+          type: F
+          status: 1
+          createBy: admin
+        - name:  修改
+          meta:
+            permission: 'sys:user:edit'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 删除
+          meta:
+            permission: 'sys:user:remove'
+          type: F
+          createBy: admin
+        - name: 导入
+          meta:
+            permission: 'sys:user:import'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 导出
+          meta:
+            permission: 'sys:user:export'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 重置密码
+          meta:
+            permission: 'sys:user:resetPwd'
+          type: F
+          status: 1
+          createBy: admin
+    - name: 角色管理
+      path: role
+      component: 'sys/role/index'
+      meta:
+        icon: 'carbon:user-role'
+        permission: 'sys:role:list'
+      type: C
+      status: 1
+      createBy: admin
+      children:
+        - name: 查询
+          meta:
+            # 表示查看详情
+            permission: 'sys:role:query'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 新增
+          meta:
+            permission: 'sys:role:add'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 修改
+          meta:
+            permission: 'sys:role:edit'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 删除
+          meta:
+            permission: 'sys:role:remove'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 导出
+          meta:
+            permission: 'sys:role:export'
+          type: F
+          status: 1
+          createBy: admin
+    - name: 菜单管理
+      path: "menu"
+      component: 'sys/menu/index'
+      meta:
+        icon: 'clarity:tree-view-solid'
+        permission: 'sys:menu:list'
+      type: C
+      status: 1
+      createBy: admin
+      children:
+        - name: 查询
+          meta:
+            # 表示查看详情
+            permission: 'sys:menu:query'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 新增
+          meta:
+            permission: 'menu:add'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 修改
+          meta:
+            permission: 'sys:menu:edit'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 删除
+          meta:
+            permission: 'sys:menu:remove'
+          type: F
+          status: 1
+          createBy: admin
+        - name: 导出
+          meta:
+            permission: 'sys:menu:export'
+          type: F
+          status: 1
+          createBy: admin
