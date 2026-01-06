@@ -211,10 +211,6 @@ The project follows a modular, layered architecture to promote separation of con
 └── Dockerfile          # Docker build definition
 ```
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/sufo/bailu-backend/issues).
-
 ## 📄 License
 
 This project is [MIT](./LICENSE) licensed.

@@ -211,10 +211,6 @@ func (r *UserRepo) FindByParams(ctx context.Context, params *dto.UserQueryParams
 └── Dockerfile          # Docker 构建定义
 ```
 
-## 🤝 贡献
-
-欢迎贡献、提出问题和功能请求！请随时查看 [issues 页面](https://github.com/sufo/bailu-backend/issues)。
-
 ## 📄 许可证
 
 本项目采用 [MIT](./LICENSE) 许可证。
