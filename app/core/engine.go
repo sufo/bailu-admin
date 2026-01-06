@@ -18,6 +18,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"go.uber.org/zap"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -25,7 +26,7 @@ import (
 )
 
 // 2.如果是有nginx前置做代理，基本不需要gin框架记录访问日志
-func InitRouter(r router.IRouter, www string) *gin.Engine {
+func InitRouter(r router.IRouter, logger *zap.SugaredLogger, www string) *gin.Engine {
 	gin.SetMode(config.Conf.Server.Mode)
 	app := gin.New()
 	// 限制表单上传大小 MB，默认为32MB
@@ -44,7 +45,8 @@ func InitRouter(r router.IRouter, www string) *gin.Engine {
 
 	//log
 	if config.Conf.Server.Mode != "release" {
-		app.Use(middleware.LoggerMiddleware(middleware.AllowPathPrefixNoSkipper(prefixes...),
+		app.Use(middleware.LoggerMiddleware(logger,
+			middleware.AllowPathPrefixNoSkipper(prefixes...),
 			middleware.AllowPathPrefixSkipper("/api/upload", "/api/file"),
 		))
 	}

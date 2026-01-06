@@ -24,6 +24,7 @@ import (
 	"bailu/app/service/cron"
 	"bailu/pkg/casbin"
 	"bailu/pkg/jwt"
+	"bailu/pkg/log"
 	"bailu/pkg/sms"
 	"bailu/pkg/store"
 	"bailu/utils/captcha"
@@ -34,6 +35,7 @@ import (
 
 func BuildInjector(www string) (*Injector, func(), error) {
 	wire.Build(
+		log.InitLogger,
 		//validator.New,
 		sms.New,
 		core.InitGorm,

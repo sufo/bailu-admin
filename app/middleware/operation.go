@@ -33,17 +33,6 @@ func init() {
 	}
 }
 
-// CustomResponseWriter 封装 gin ResponseWriter 用于获取回包内容。
-type CustomResponseWriter struct {
-	gin.ResponseWriter
-	body *bytes.Buffer
-}
-
-func (w CustomResponseWriter) Write(b []byte) (int, error) {
-	w.body.Write(b)
-	return w.ResponseWriter.Write(b)
-}
-
 func OperationMiddleware(operSrv *sys.OperationService, skippers ...SkipperFunc) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if operSrv == nil {
@@ -107,86 +96,87 @@ func OperationMiddleware(operSrv *sys.OperationService, skippers ...SkipperFunc)
 		c.Next()
 
 		ctx := c.Copy()
-		        defer func(_start time.Time, crw CustomResponseWriter) {
-		            var operId uint64
-		            var operName string
-		            //操作人
-		            user, exist := ctx.Get(consts.REQUEST_USER)
-		            if exist {
-		                onlineUser := user.(*entity.OnlineUserDto)
-		                operId = onlineUser.ID
-		                operName = onlineUser.Username
-		            } else {
-		                token, exist := ctx.Get(consts.REQ_TOKEN)
-		                if exist {
-		                    operId, err = jwt.ParseUserID(token.(string))
-		                    if err != nil {
-		                        operId = 0
-		                    }
-		                }
-		            }
-		
-		            // Assign all record fields
-		            record.OperId = operId
-		            record.OperName = operName
-		            record.TraceID = ctx.GetString(consts.REQUEST_ID_KEY)
-		            record.Location = utils.GetAddr(record.Ip)
-		            record.Latency = time.Since(_start)
-		            record.Status = crw.Status()
-		
-		            if ctx.Errors != nil {
-		                record.Msg = ctx.Errors.ByType(gin.ErrorTypePrivate).String()
-		            }
-		
-		            // Conditional response logging
-		            if ctx.Request.Method != http.MethodGet {
-		                // For non-GET requests, log the response body
-		                disposition := crw.Header().Get("Content-Disposition")
-		                isAttachment := strings.Contains(disposition, "attachment")
-		                isBinary := strings.Contains(crw.Header().Get("Content-Type"), "application/octet-stream") ||
-		                    strings.Contains(crw.Header().Get("Content-Type"), "application/force-download") ||
-		                    strings.Contains(crw.Header().Get("Content-Type"), "application/download")
-		
-		                if isAttachment || isBinary {
-		                    filename := ""
-		                    // Try to parse filename from Content-Disposition
-		                    _, params, err := mime.ParseMediaType(disposition)
-		                    if err == nil {
-		                        filename = params["filename"]
-		                    }
-		                    fileSize := crw.Header().Get("Content-Length")
-		                    fileInfo := map[string]string{
-		                        "message":  "File Download",
-		                        "filename": filename,
-		                        "size":     fileSize,
-		                    }
-		                    respBytes, _ := json.Marshal(fileInfo)
-		                    record.Resp = string(respBytes)
-		                } else {
-		                    respBody := crw.body.String()
-		                    if len(respBody) > 1024 {
-		                        record.Resp = respBody[:1024] + "..." // Truncate long responses
-		                    } else {
-		                        record.Resp = respBody
-		                    }
-		                }
-		            }
-		
-		            // For all requests, try to unmarshal for business code and message
-		            if record.Status == http.StatusOK && len(crw.body.Bytes()) > 0 {
-		                var result Response
-		                err = json.Unmarshal(crw.body.Bytes(), &result)
-		                if err == nil {
-		                    record.RespCode = &result.Code
-		                    // Only override msg if it's not a file download
-		                    if record.Msg == "" || result.Msg != "" {
-		                        record.Msg = result.Msg
-		                    }
-		                }
-		            }
-		
-		            if err := operSrv.Create(ctx.Request.Context(), &record); err != nil {
-		                log.L.Error("create operation record error:", zap.Error(err))
-		            }
-		        }(start, crw)	}
+		defer func(_start time.Time, crw CustomResponseWriter) {
+			var operId uint64
+			var operName string
+			//操作人
+			user, exist := ctx.Get(consts.REQUEST_USER)
+			if exist {
+				onlineUser := user.(*entity.OnlineUserDto)
+				operId = onlineUser.ID
+				operName = onlineUser.Username
+			} else {
+				token, exist := ctx.Get(consts.REQ_TOKEN)
+				if exist {
+					operId, err = jwt.ParseUserID(token.(string))
+					if err != nil {
+						operId = 0
+					}
+				}
+			}
+
+			// Assign all record fields
+			record.OperId = operId
+			record.OperName = operName
+			record.TraceID = ctx.GetString(consts.REQUEST_ID_KEY)
+			record.Location = utils.GetAddr(record.Ip)
+			record.Latency = time.Since(_start)
+			record.Status = crw.Status()
+
+			if ctx.Errors != nil {
+				record.Msg = ctx.Errors.ByType(gin.ErrorTypePrivate).String()
+			}
+
+			// Conditional response logging
+			if ctx.Request.Method != http.MethodGet {
+				// For non-GET requests, log the response body
+				disposition := crw.Header().Get("Content-Disposition")
+				isAttachment := strings.Contains(disposition, "attachment")
+				isBinary := strings.Contains(crw.Header().Get("Content-Type"), "application/octet-stream") ||
+					strings.Contains(crw.Header().Get("Content-Type"), "application/force-download") ||
+					strings.Contains(crw.Header().Get("Content-Type"), "application/download")
+
+				if isAttachment || isBinary {
+					filename := ""
+					// Try to parse filename from Content-Disposition
+					_, params, err := mime.ParseMediaType(disposition)
+					if err == nil {
+						filename = params["filename"]
+					}
+					fileSize := crw.Header().Get("Content-Length")
+					fileInfo := map[string]string{
+						"message":  "File Download",
+						"filename": filename,
+						"size":     fileSize,
+					}
+					respBytes, _ := json.Marshal(fileInfo)
+					record.Resp = string(respBytes)
+				} else {
+					respBody := crw.body.String()
+					if len(respBody) > 1024 {
+						record.Resp = respBody[:1024] + "..." // Truncate long responses
+					} else {
+						record.Resp = respBody
+					}
+				}
+			}
+
+			// For all requests, try to unmarshal for business code and message
+			if record.Status == http.StatusOK && len(crw.body.Bytes()) > 0 {
+				var result Response
+				err = json.Unmarshal(crw.body.Bytes(), &result)
+				if err == nil {
+					record.RespCode = &result.Code
+					// Only override msg if it's not a file download
+					if record.Msg == "" || result.Msg != "" {
+						record.Msg = result.Msg
+					}
+				}
+			}
+
+			if err := operSrv.Create(ctx.Request.Context(), &record); err != nil {
+				log.L.Error("create operation record error:", zap.Error(err))
+			}
+		}(start, crw)
+	}
 }

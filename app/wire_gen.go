@@ -20,6 +20,7 @@ import (
 	"bailu/app/service/sys"
 	"bailu/pkg/casbin"
 	"bailu/pkg/jwt"
+	"bailu/pkg/log"
 	"bailu/pkg/sms"
 	"bailu/pkg/store"
 	"bailu/utils/captcha"
@@ -245,13 +246,20 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		Message:       mineMessage,
 		FileApi:       fileApi,
 	}
-	engine := core.InitRouter(routerRouter, www)
+	sugaredLogger, cleanup3, err := log.InitLogger()
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	engine := core.InitRouter(routerRouter, sugaredLogger, www)
 	scheduleNotice := jobs.NewScheduleNotice(noticeService)
 	inject2Jobs := &cron.Inject2Jobs{
 		Notice: scheduleNotice,
 	}
 	injector := &Injector{
 		Engine:         engine,
+		Logger:         sugaredLogger,
 		Router:         routerRouter,
 		MenuSrv:        menuService,
 		Job:            cronTask,
@@ -260,6 +268,7 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		SSE:            event,
 	}
 	return injector, func() {
+		cleanup3()
 		cleanup2()
 		cleanup()
 	}, nil

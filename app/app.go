@@ -22,10 +22,10 @@ import (
 	"fmt"
 	"github.com/fvbock/endless"
 	"github.com/google/gops/agent"
+	"go.uber.org/zap"
 	"os"
 	//_log "log"
 	"bailu/app/config"
-	"bailu/pkg/log"
 	"net/http"
 	"time"
 )
@@ -67,20 +67,21 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	//加载配置文件
 	core.InitViper(o.Conf)
 	respErr.Initial() //初始化一些常用响应错误变量
-	//db := util.Gorm()
-	//di.Add("gorm", db)
+
 	if v := o.MenuFile; v != "" {
 		config.Conf.Menu.Path = v
 	}
-	//初始化日志
-	clearLogFunc, err := log.InitLogger()
+
+	//wire inject
+	injector, clearFunc, err := BuildInjector(o.WWW)
 	if err != nil {
 		return nil, err
 	}
-	log.L.Infof("Start server,#run_mode %s,#version %s,#pid %d", config.Conf.Server.Mode, o.Version, os.Getpid())
+
+	injector.Logger.Infof("Start server,#run_mode %s,#version %s,#pid %d", config.Conf.Server.Mode, o.Version, os.Getpid())
 
 	//初始化监视器
-	clearMonitor := InitMonitor()
+	clearMonitor := InitMonitor(injector.Logger)
 
 	//初始化全局ip2region
 	ip2region.InitIp2Region()
@@ -88,7 +89,7 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	//初始化全局validator翻译器
 	tranErr := translate.InitTrans(config.Conf.Server.Locale)
 	if tranErr != nil {
-		log.L.Errorf("init translate error: %s", tranErr.Error())
+		injector.Logger.Errorf("init translate error: %s", tranErr.Error())
 	}
 
 	//init i18n
@@ -109,11 +110,6 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 		})
 	}
 
-	//wire inject
-	injector, clearFunc, err := BuildInjector(o.WWW)
-	if err != nil {
-		return nil, err
-	}
 	//配置静态文件夹路径 第一个参数是api，第二个是文件夹路径
 	if o.WWW != "" {
 		injector.Engine.Use(middleware.WWWMiddleware(o.WWW,
@@ -136,13 +132,12 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	}()
 
 	//启动服务后会阻塞， 一些服务启动时的动作不要放在它后面
-	InitHTTPServer(injector.Engine)
+	InitHTTPServer(injector.Engine, injector.Logger)
 
 	return func() {
 		<-injector.SSE.ClosedClients //关闭sse
 		clearFunc()
 		clearMonitor()
-		clearLogFunc()
 		//关闭redis连接
 		if config.Conf.Server.UseRedis {
 			err := store.RedisClient.Close()
@@ -156,13 +151,13 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	}, nil
 }
 
-func InitMonitor() func() {
+func InitMonitor(logger *zap.SugaredLogger) func() {
 	if c := config.Conf.Monitor; c.Enable {
 		// ShutdownCleanup set false to prevent automatically closes on os.Interrupt
 		// and close agent manually before service shutting down
 		err := agent.Listen(agent.Options{Addr: c.Addr, ConfigDir: c.ConfigDir, ShutdownCleanup: false})
 		if err != nil {
-			log.L.Errorf("Agent monitor exception: %s", err.Error())
+			logger.Errorf("Agent monitor exception: %s", err.Error())
 		}
 		return func() {
 			agent.Close()
@@ -171,7 +166,7 @@ func InitMonitor() func() {
 	return func() {}
 }
 
-func InitHTTPServer(handler http.Handler) func() {
+func InitHTTPServer(handler http.Handler, logger *zap.SugaredLogger) func() {
 	cfg := config.Conf.Server
 	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
 	s := endless.NewServer(addr, handler)
@@ -180,7 +175,7 @@ func InitHTTPServer(handler http.Handler) func() {
 	s.MaxHeaderBytes = 1 << 20 //请求头最大1M
 	s.BeforeBegin = func(add string) {
 		//_log.Printf("Actual pid is %d", syscall.Getpid())
-		log.L.Info("addr:", addr)
+		logger.Info("addr:", addr)
 	}
 
 	var err error

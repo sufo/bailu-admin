@@ -11,10 +11,14 @@ import (
 	"time"
 )
 
-var level zapcore.Level
-var L *zap.SugaredLogger
+var (
+	level zapcore.Level
+	L     *zap.SugaredLogger // Global logger for backward compatibility
+)
 
-func InitLogger() (func(), error) {
+// InitLogger initializes the global logger `L` and also returns the instance
+// and cleanup function for use with dependency injection.
+func InitLogger() (*zap.SugaredLogger, func(), error) {
 	if ok, _ := pathExists(config.Conf.Zap.Director); !ok {
 		fmt.Printf("create %v directory\n", config.Conf.Zap.Director)
 		_ = os.Mkdir(config.Conf.Zap.Director, os.ModePerm)
@@ -41,22 +45,25 @@ func InitLogger() (func(), error) {
 
 	zapCore, clearFunc, err := getEncoderCore()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var logger *zap.Logger
-	if level <= zap.DebugLevel { // Show stacktrace for debug and lower levels
+	if level <= zap.DebugLevel {
 		logger = zap.New(zapCore, zap.AddStacktrace(level))
 	} else {
 		logger = zap.New(zapCore)
 	}
 
 	if config.Conf.Zap.ShowLine {
-		logger = logger.WithOptions(zap.AddCaller(), zap.AddCallerSkip(1))
+		logger = logger.WithOptions(zap.AddCaller())
 	}
 
+	// Assign to the global logger for backward compatibility
 	L = logger.Sugar()
-	return clearFunc, err
+	
+	// Also return the instance for dependency injection
+	return L, clearFunc, err
 }
 
 // getEncoderConfig returns a developer-friendly encoder configuration.
