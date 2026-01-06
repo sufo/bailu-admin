@@ -37,8 +37,7 @@ func (r *BaseEntity) BeforeCreate(tx *gorm.DB) error {
 		user := appctx.GetAuthUser[OnlineUserDto](ctx)
 		if user != nil {
 			r.CreateBy = user.ID
-			//冲突的时候啥也不做,适合只插入
-			//tx.Statement.AddClause(clause.OnConflict{DoNothing: true})
+			
 		} else {
 			typeof := reflect.TypeOf(tx.Statement.Model)
 			log.L.Errorf("%s BeforeCreate: user is nil", typeof.Elem().Name())
@@ -52,14 +51,9 @@ func (r *BaseEntity) BeforeUpdate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
 	if ctx != nil {
 		user := appctx.GetAuthUser[OnlineUserDto](ctx)
-		//fmt.Printf("t1: %T\n", tx.Statement.Model)
-		//reflect.TypeOf(tx.Statement.Model).String()
 		if user != nil {
 			r.UpdateBy = user.ID
-			//冲突的时候啥也不做,适合只插入
-			//tx.Statement.AddClause(clause.OnConflict{DoNothing: true})
-			//在冲突时，更新除主键以外的所有列
-			//Clauses(clause.OnConflict{UpdateAll: true})
+
 		} else {
 			typeof := reflect.TypeOf(tx.Statement.Model)
 			log.L.Error("%s BeforeUpdate: user is nil ", typeof.Elem().Name())

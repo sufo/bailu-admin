@@ -2,7 +2,7 @@ version: 1.0.0
 
 server:
   # debug开发环境 test测试环境 release线上环境  同gin [/home/sufo/workspace/go/gopath/pkg/mod/github.com/gin-gonic/gin@v1.7.7/mode.go]
-  mode : release
+  mode : debug
   # 服务器ip，默认使用 0.0.0.0
   host : 0.0.0.0
   # 服务名称
@@ -54,7 +54,7 @@ datasource:
   # 设置连接可以重用的最长时间(单位：秒)
   max-lifetime: 7200
   EnableAutoMigrate: false
-  # 数据库类型 mysql，sqlite3， postgres
+  # 数据库类型 mysql，sqlite3， postgres...
   mysql:
     driver: mysql
     host : 127.0.0.1
@@ -62,9 +62,9 @@ datasource:
     username: test
     password: 123456
     db-name:  bailu-admin
-    params: charset=utf8&parseTime=True&loc=Local&timeout=1000ms
-    # 数据库连接字符串 mysql 缺省信息 charset=utf8&parseTime=True&loc=Local&timeout=1000ms
-    # source: user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8&parseTime=True&loc=Local&timeout=1000ms
+    params: charset=utf8mb4&parseTime=True&loc=Local&timeout=1000ms
+    # 数据库连接字符串 mysql 缺省信息 charset=utf8mb4&parseTime=True&loc=Local&timeout=1000ms
+    # source: user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local&timeout=1000ms
 
 #  log-mode: false
   #是否通过zap写入日志
@@ -217,7 +217,7 @@ menu:
   path: "config/menu.yml"
 
 oper-log:
-  enable: false
+  enable: true
   interval: 604800 # 3600 * 24 * 7  #清理周期 s
 
 casbin:

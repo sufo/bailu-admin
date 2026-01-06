@@ -25,6 +25,7 @@ func TraceMiddleware(skippers ...SkipperFunc) gin.HandlerFunc {
 		}
 		//c.Writer.Header().Set("X-Trace-Id", traceID)
 		c.Writer.Header().Set(consts.REQUEST_ID_KEY, traceID)
+		c.Set(consts.REQUEST_ID_KEY, traceID)
 
 		c.Next()
 	}

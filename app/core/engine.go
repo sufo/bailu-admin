@@ -39,6 +39,9 @@ func InitRouter(r router.IRouter, www string) *gin.Engine {
 	//recovery
 	app.Use(middleware.RecoveryMiddleware(true, translate.Trans))
 
+	// trace id
+	app.Use(middleware.TraceMiddleware())
+
 	//log
 	if config.Conf.Server.Mode != "release" {
 		app.Use(middleware.LoggerMiddleware(middleware.AllowPathPrefixNoSkipper(prefixes...),

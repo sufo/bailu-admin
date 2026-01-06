@@ -1,10 +1,3 @@
-/**
- * Create by sufo
- * @Email ouamour@gmail.com
- *
- * @Desc 操作中间件
- */
-
 package middleware
 
 import (
@@ -19,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"io"
+	"mime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,6 +33,17 @@ func init() {
 	}
 }
 
+// CustomResponseWriter 封装 gin ResponseWriter 用于获取回包内容。
+type CustomResponseWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
+}
+
+func (w CustomResponseWriter) Write(b []byte) (int, error) {
+	w.body.Write(b)
+	return w.ResponseWriter.Write(b)
+}
+
 func OperationMiddleware(operSrv *sys.OperationService, skippers ...SkipperFunc) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if operSrv == nil {
@@ -52,7 +57,15 @@ func OperationMiddleware(operSrv *sys.OperationService, skippers ...SkipperFunc)
 		start := time.Now()
 		var body []byte
 		var err error
-		if c.Request.Method != http.MethodGet {
+
+		contentType := c.GetHeader("Content-Type")
+
+		if strings.Contains(contentType, "multipart/form-data") {
+			// For file uploads, only log form fields, not the file content.
+			if err := c.Request.ParseMultipartForm(8 << 20); err == nil { // 8 MB max memory
+				body, _ = json.Marshal(c.Request.PostForm)
+			}
+		} else if c.Request.Method != http.MethodGet {
 			body, err = io.ReadAll(c.Request.Body)
 			if err != nil {
 				log.L.Error("read body from request error:", zap.Error(err))
@@ -76,24 +89,12 @@ func OperationMiddleware(operSrv *sys.OperationService, skippers ...SkipperFunc)
 		record := entity.OperationRecord{
 			Ip:     c.ClientIP(),
 			Method: c.Request.Method,
-			//Path:   c.Request.RequestURI,
-			Path:  c.Request.URL.Path,
-			Agent: c.Request.UserAgent(),
-			Body:  string(body),
-			//OperId:   operId,
-			//OperName: operName,
+			Path:   c.Request.URL.Path,
+			Agent:  c.Request.UserAgent(),
+			Body:   string(body),
 		}
 
-		// 上传文件时候 中间件日志进行裁断操作
-		if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {
-			if len(record.Body) > 1024 {
-				// 截断
-				newBody := respPool.Get().([]byte)
-				copy(newBody, record.Body)
-				record.Body = string(newBody)
-				defer respPool.Put(newBody[:0])
-			}
-		}
+		// The original truncation logic is no longer needed here as we don't read the file content.
 
 		// 使用自定义 ResponseWriter
 		crw := CustomResponseWriter{
@@ -106,75 +107,86 @@ func OperationMiddleware(operSrv *sys.OperationService, skippers ...SkipperFunc)
 		c.Next()
 
 		ctx := c.Copy()
-		defer func(_start time.Time, crw CustomResponseWriter) {
-			var operId uint64
-			var operName string
-			//操作人
-			user, exist := ctx.Get(consts.REQUEST_USER)
-			if exist {
-				onlineUser := user.(*entity.OnlineUserDto)
-				operId = onlineUser.ID
-				operName = onlineUser.Username
-			} else {
-				token, exist := ctx.Get(consts.REQ_TOKEN)
-				if exist {
-					operId, err = jwt.ParseUserID(token.(string))
-					if err != nil {
-						operId = 0
-					}
-				}
-			}
-			record.OperId = operId
-			record.OperName = operName
-
-			//操作模块,
-			//如果需要记录操作对应的描述信息，那么这个描述需要自己添加，在每个需要记录的controller层增加
-			// 通过c *gin.Context c.Set("title","操作描述信息")
-			//Record.Title = c.Get("title")
-
-			//地址
-			record.Location = utils.GetAddr(record.Ip)
-
-			// 记录回包内容和处理时间
-			latency := time.Since(_start)
-			if ctx.Errors != nil {
-				record.Msg = ctx.Errors.ByType(gin.ErrorTypePrivate).String()
-			}
-			record.Status = ctx.Writer.Status()
-			record.Latency = latency
-			//w := ctx.Writer.(CustomResponseWriter)
-			record.Resp = crw.body.String()
-
-			//逻辑响应码和message
-			if record.Status == http.StatusOK {
-				var result Response
-				err = json.Unmarshal(crw.body.Bytes(), &result)
-				if err == nil {
-					record.RespCode = &result.Code
-					record.Msg = result.Msg
-				}
-			}
-
-			if strings.Contains(crw.Header().Get("Pragma"), "public") ||
-				strings.Contains(crw.Header().Get("Expires"), "0") ||
-				strings.Contains(crw.Header().Get("Cache-Control"), "must-revalidate, post-check=0, pre-check=0") ||
-				strings.Contains(crw.Header().Get("Content-Type"), "application/force-download") ||
-				strings.Contains(crw.Header().Get("Content-Type"), "application/octet-mq") ||
-				strings.Contains(crw.Header().Get("Content-Type"), "application/vnd.ms-excel") ||
-				strings.Contains(crw.Header().Get("Content-Type"), "application/download") ||
-				strings.Contains(crw.Header().Get("Content-Disposition"), "attachment") ||
-				strings.Contains(crw.Header().Get("Content-Transfer-Encoding"), "binary") {
-				if len(record.Resp) > 1024 {
-					// 截断
-					newBody := respPool.Get().([]byte)
-					copy(newBody, record.Resp)
-					record.Resp = string(newBody)
-					defer respPool.Put(newBody[:0])
-				}
-			}
-			if err := operSrv.Create(ctx.Request.Context(), &record); err != nil {
-				log.L.Error("create operation record error:", zap.Error(err))
-			}
-		}(start, crw)
-	}
+		        defer func(_start time.Time, crw CustomResponseWriter) {
+		            var operId uint64
+		            var operName string
+		            //操作人
+		            user, exist := ctx.Get(consts.REQUEST_USER)
+		            if exist {
+		                onlineUser := user.(*entity.OnlineUserDto)
+		                operId = onlineUser.ID
+		                operName = onlineUser.Username
+		            } else {
+		                token, exist := ctx.Get(consts.REQ_TOKEN)
+		                if exist {
+		                    operId, err = jwt.ParseUserID(token.(string))
+		                    if err != nil {
+		                        operId = 0
+		                    }
+		                }
+		            }
+		
+		            // Assign all record fields
+		            record.OperId = operId
+		            record.OperName = operName
+		            record.TraceID = ctx.GetString(consts.REQUEST_ID_KEY)
+		            record.Location = utils.GetAddr(record.Ip)
+		            record.Latency = time.Since(_start)
+		            record.Status = crw.Status()
+		
+		            if ctx.Errors != nil {
+		                record.Msg = ctx.Errors.ByType(gin.ErrorTypePrivate).String()
+		            }
+		
+		            // Conditional response logging
+		            if ctx.Request.Method != http.MethodGet {
+		                // For non-GET requests, log the response body
+		                disposition := crw.Header().Get("Content-Disposition")
+		                isAttachment := strings.Contains(disposition, "attachment")
+		                isBinary := strings.Contains(crw.Header().Get("Content-Type"), "application/octet-stream") ||
+		                    strings.Contains(crw.Header().Get("Content-Type"), "application/force-download") ||
+		                    strings.Contains(crw.Header().Get("Content-Type"), "application/download")
+		
+		                if isAttachment || isBinary {
+		                    filename := ""
+		                    // Try to parse filename from Content-Disposition
+		                    _, params, err := mime.ParseMediaType(disposition)
+		                    if err == nil {
+		                        filename = params["filename"]
+		                    }
+		                    fileSize := crw.Header().Get("Content-Length")
+		                    fileInfo := map[string]string{
+		                        "message":  "File Download",
+		                        "filename": filename,
+		                        "size":     fileSize,
+		                    }
+		                    respBytes, _ := json.Marshal(fileInfo)
+		                    record.Resp = string(respBytes)
+		                } else {
+		                    respBody := crw.body.String()
+		                    if len(respBody) > 1024 {
+		                        record.Resp = respBody[:1024] + "..." // Truncate long responses
+		                    } else {
+		                        record.Resp = respBody
+		                    }
+		                }
+		            }
+		
+		            // For all requests, try to unmarshal for business code and message
+		            if record.Status == http.StatusOK && len(crw.body.Bytes()) > 0 {
+		                var result Response
+		                err = json.Unmarshal(crw.body.Bytes(), &result)
+		                if err == nil {
+		                    record.RespCode = &result.Code
+		                    // Only override msg if it's not a file download
+		                    if record.Msg == "" || result.Msg != "" {
+		                        record.Msg = result.Msg
+		                    }
+		                }
+		            }
+		
+		            if err := operSrv.Create(ctx.Request.Context(), &record); err != nil {
+		                log.L.Error("create operation record error:", zap.Error(err))
+		            }
+		        }(start, crw)	}
 }

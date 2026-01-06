@@ -27,7 +27,7 @@ insert into `sys_role` values(3, '普通角色', 'common',  5, 2, 1, '普通角�
 -- ----------------------------
 -- 初始化-用户信息表数据
 -- ----------------------------
-insert into `sys_user` values(1, 'bailu', 'KuSRz6tmYZr3hBtE4B2p0BKYNSof65FPOQfr3vtqjXDNsyhyqxH5nhgQrMgjdPkLf8UZjg+kQOIMZDqbyPDjo7vgkrtEHoJzBnuvI/oxzCB2wTCdM8b6nQ5eOlLhbnq/aPVhGRmc/Ux+D6am9q0jjEyNus85EFP66ezZiNbYq9I=', '', '', '', '', '86', '13500000000', '0', '', NULL, '', '127.0.0.1', '1','', null, '2023-04-27 14:32:21', '2023-04-27 14:32:21', NULL, 0, 0);
+insert into `sys_user` values(1, 'bailu', '$2a$10$Z2V4ugIxQFzgKWfat6HmzuAAEfDEkc5BMfXVpXvNeazLADweG5eOO', '', '', '', '', '86', '13500000000', '0', '', NULL, '', '127.0.0.1', '1','', null, '2023-04-27 14:32:21', '2023-04-27 14:32:21', NULL, 0, 0);
 
 -- 角色用户中间表
 insert into `sys_user_role` values(1,1);

@@ -41,6 +41,7 @@ func (o *OperationService) List(ctx context.Context, params dto.OperParams) (*re
 			builder.WithWhere("resp_code <> 0")
 		}
 	}
+	builder.WithOrder("created_at desc")
 	if result, err := o.OperRepo.FindByBuilder(ctx, builder); err != nil {
 		return nil, err
 	} else {
