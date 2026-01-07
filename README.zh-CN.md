@@ -1,17 +1,8 @@
 # Bailu Admin
+[![License](https://img.shields.io/badge/license-MIT-blue.svg")](https://github.com/sufo/bailu-admin)
 
-<p align="center">
-  <strong>基于 Gin + Vue + Naive UI 的前后端分离通用管理台系统。</strong>
-</p>
+基于 Gin + Vue3 + Naive UI 的前后端分离通用管理台系统。
 
-<p align="center">
-  <img src="https://img.shields.io/badge/go-1.21+-blue.svg" alt="Go Version">
-  <img src="https://img.shields.io/badge/gin-v1.10.0-blue.svg" alt="Gin Version">
-  <img src="https://img.shields.io/badge/gorm-v1.25.11-orange.svg" alt="Gorm Version">
-  <img src="https://img.shields.io/badge/casbin-v2.99.0-green.svg" alt="Casbin Version">
-  <img src="https://img.shields.io/badge/wire-v0.6.0-purple.svg" alt="Wire Version">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
-</p>
 
 <div align="center">
   <strong>中文</strong> | <strong><a href="./README.md">English</a></strong>
@@ -132,8 +123,8 @@ func (r *UserRepo) FindByParams(ctx context.Context, params *dto.UserQueryParams
 
 1.  **克隆仓库:**
     ```shell
-    git clone https://github.com/sufo/bailu-backend.git
-    cd bailu-backend
+    git clone https://github.com/sufo/bailu-admin.git
+    cd bailu-admin
     ```
 
 2.  **配置应用:**

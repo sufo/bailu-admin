@@ -1,17 +1,8 @@
 # Bailu Admin
 
-<p align="center">
-  <strong>A general management system with separate frontend and backend, built on Gin, Vue, and Naive UI.</strong>
-</p>
+[![License](https://img.shields.io/badge/license-MIT-blue.svg")](https://github.com/sufo/bailu-admin)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/go-1.21+-blue.svg" alt="Go Version">
-  <img src="https://img.shields.io/badge/gin-v1.10.0-blue.svg" alt="Gin Version">
-  <img src="https://img.shields.io/badge/gorm-v1.25.11-orange.svg" alt="Gorm Version">
-  <img src="https://img.shields.io/badge/casbin-v2.99.0-green.svg" alt="Casbin Version">
-  <img src="https://img.shields.io/badge/wire-v0.6.0-purple.svg" alt="Wire Version">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
-</p>
+A general management system with separate frontend and backend, built on Gin, Vue3, and Naive UI.
 
 <div align="center">
   <strong><a href="./README.zh-CN.md">中文</a></strong> | <strong>English</strong>
@@ -132,8 +123,8 @@ Follow these steps to get your local development environment up and running.
 
 1.  **Clone the repository:**
     ```shell
-    git clone https://github.com/sufo/bailu-backend.git
-    cd bailu-backend
+    git clone https://github.com/sufo/bailu-admin.git
+    cd bailu-admin
     ```
 
 2.  **Configure the application:**
