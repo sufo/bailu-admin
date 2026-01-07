@@ -1,6 +1,6 @@
 # Bailu Admin
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg")](https://github.com/sufo/bailu-admin)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sufo/bailu-admin)
 
 A general management system with separate frontend and backend, built on Gin, Vue3, and Naive UI.
 

@@ -1,5 +1,5 @@
 # Bailu Admin
-[![License](https://img.shields.io/badge/license-MIT-blue.svg")](https://github.com/sufo/bailu-admin)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sufo/bailu-admin)
 
 基于 Gin + Vue3 + Naive UI 的前后端分离通用管理台系统。
 
