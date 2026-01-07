@@ -5,7 +5,7 @@
 A general management system with separate frontend and backend, built on Gin, Vue3, and Naive UI.
 
 <div align="center">
-  <strong><a href="./README.zh-CN.md">中文</a></strong> | <strong>English</strong>
+  <a href="./README.zh-CN.md">中文</a> | English
 </div>
 
 ---
@@ -22,6 +22,7 @@ A general management system with separate frontend and backend, built on Gin, Vu
 -   **API Documentation**: Generates interactive API documentation using Swagger (OpenAPI).
 -   **Dynamic Query Generation**: Automatically builds database queries from request DTOs, reducing boilerplate code.
 -   **Structured Logging**: Uses Zap for high-performance, structured logging.
+-   **Internationalization (i18n)**: Supports multiple languages for broader accessibility.
 -   **Flexible Configuration**: Manages application configuration via Viper, supporting multiple file formats.
 
 

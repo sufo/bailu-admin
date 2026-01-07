@@ -5,7 +5,7 @@
 
 
 <div align="center">
-  <strong>中文</strong> | <strong><a href="./README.md">English</a></strong>
+  中文 | <a href="./README.md">English</a>
 </div>
 
 ---
@@ -22,6 +22,7 @@
 -   **API 文档**: 使用 Swagger (OpenAPI) 生成交互式 API 文档。
 -   **动态查询生成**: 从请求 DTO 自动构建数据库查询，减少样板代码。
 -   **结构化日志**: 使用 Zap 实现高性能的结构化日志记录。
+-   **国际化 (i18n)**: 支持多语言，提高可访问性。
 -   **灵活的配置**: 通过 Viper 管理应用配置，支持多种文件格式。
 
 
