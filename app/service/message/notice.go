@@ -11,14 +11,14 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/wire"
-	"bailu/app/core/appctx"
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	"bailu/app/domain/repo/base"
-	"bailu/app/domain/resp"
-	"bailu/app/domain/vo"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/domain/vo"
+	"github.com/sufo/bailu-admin/utils"
 )
 
 var NoticeSrvSet = wire.NewSet(wire.Struct(new(NoticeService), "*"))

@@ -11,7 +11,7 @@ import (
 	"context"
 	"github.com/google/wire"
 	"gorm.io/gorm"
-	"bailu/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/core/appctx"
 )
 
 var TransSet = wire.NewSet(wire.Struct(new(Trans), "*"))

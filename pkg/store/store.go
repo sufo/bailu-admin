@@ -8,7 +8,7 @@
 package store
 
 import (
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"github.com/google/wire"
 	"time"
 )

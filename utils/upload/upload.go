@@ -10,7 +10,7 @@ package upload
 import (
 	"github.com/google/wire"
 	"mime/multipart"
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 )
 
 type OSS interface {

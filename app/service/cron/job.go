@@ -8,12 +8,12 @@
 package cron
 
 import (
-	"bailu/app/domain/entity"
-	"bailu/app/domain/vo"
-	"bailu/app/service/cron/jobs"
-	"bailu/pkg/httpclient"
-	"bailu/pkg/log"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/vo"
+	"github.com/sufo/bailu-admin/app/service/cron/jobs"
+	"github.com/sufo/bailu-admin/pkg/httpclient"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils"
 	"bufio"
 	"context"
 	"encoding/json"

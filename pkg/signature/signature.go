@@ -8,8 +8,8 @@
 package signature
 
 import (
-	"bailu/app/config"
-	time2 "bailu/utils/time"
+	"github.com/sufo/bailu-admin/app/config"
+	time2 "github.com/sufo/bailu-admin/utils/time"
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"

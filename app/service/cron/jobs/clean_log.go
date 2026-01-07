@@ -8,8 +8,8 @@
 package jobs
 
 import (
-	"bailu/app/config"
-	"bailu/utils/time"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/utils/time"
 	"context"
 	"os"
 	"path"

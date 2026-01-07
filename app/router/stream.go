@@ -9,8 +9,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"bailu/app/api/admin/monitor"
-	"bailu/app/middleware"
+	"github.com/sufo/bailu-admin/app/api/admin/monitor"
+	"github.com/sufo/bailu-admin/app/middleware"
 )
 
 func (r *Router) RegisterStream(app *gin.Engine) {

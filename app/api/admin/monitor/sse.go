@@ -8,13 +8,13 @@
 package monitor
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/resp"
-	"bailu/pkg/jwt"
-	"bailu/pkg/log"
-	"bailu/pkg/mq"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/pkg/jwt"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/pkg/mq"
+	"github.com/sufo/bailu-admin/utils"
 	"context"
 	"encoding/json"
 	"github.com/gin-gonic/gin"

@@ -8,12 +8,12 @@
 package core
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/resp"
-	"bailu/app/middleware"
-	"bailu/app/router"
-	"bailu/global/consts"
-	"bailu/pkg/translate"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/middleware"
+	"github.com/sufo/bailu-admin/app/router"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/translate"
 	"github.com/LyricTian/gzip"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

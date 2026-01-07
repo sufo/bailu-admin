@@ -9,9 +9,9 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"bailu/app/config"
-	"bailu/app/middleware"
-	"bailu/global"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/middleware"
+	"github.com/sufo/bailu-admin/global"
 	"net/http"
 	"os"
 	"path/filepath"

@@ -8,11 +8,11 @@
 package util
 
 import (
-	"bailu/app/core/appctx"
-	"bailu/app/domain/entity"
-	"bailu/global/consts"
-	"bailu/pkg/log"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils"
 	"context"
 	"fmt"
 	"gorm.io/gorm"

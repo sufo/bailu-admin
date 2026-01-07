@@ -8,7 +8,7 @@
 package middleware
 
 import (
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"time"

@@ -7,7 +7,7 @@
 
 package sys
 
-import "bailu/app/config"
+import "github.com/sufo/bailu-admin/app/config"
 
 type DBService struct {
 }

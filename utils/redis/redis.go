@@ -8,7 +8,7 @@
 package redis
 
 import (
-	"bailu/pkg/store"
+	"github.com/sufo/bailu-admin/pkg/store"
 	"context"
 	"fmt"
 	"time"

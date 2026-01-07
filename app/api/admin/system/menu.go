@@ -8,14 +8,14 @@
 package system
 
 import (
-	"bailu/app/api/admin"
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/resp"
-	"bailu/app/service/sys"
-	respErr "bailu/pkg/exception"
-	"bailu/pkg/i18n"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/api/admin"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/service/sys"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/pkg/i18n"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"strconv"

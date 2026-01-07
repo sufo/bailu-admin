@@ -8,11 +8,11 @@
 package system
 
 import (
-	"bailu/app/api/admin"
-	"bailu/app/domain/resp"
-	"bailu/global/consts"
-	respErr "bailu/pkg/exception"
-	"bailu/utils/upload"
+	"github.com/sufo/bailu-admin/app/api/admin"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/global/consts"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/utils/upload"
 	"github.com/gin-gonic/gin"
 )
 

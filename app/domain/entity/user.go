@@ -8,8 +8,8 @@
 package entity
 
 import (
-	"bailu/global/consts"
-	"bailu/utils/types"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/utils/types"
 	"strings"
 	"time"
 )

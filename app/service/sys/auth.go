@@ -8,12 +8,12 @@
 package sys
 
 import (
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	respErr "bailu/pkg/exception"
-	"bailu/pkg/i18n"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/pkg/i18n"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"

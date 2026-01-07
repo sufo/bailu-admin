@@ -1,7 +1,7 @@
 package status
 
 import (
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"strings"
 )
 

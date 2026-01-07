@@ -10,8 +10,8 @@ package repo
 import (
 	"context"
 	"gorm.io/gorm"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
 )
 
 //var RoleSet = wire.NewSet(wire.Struct(new(RoleRepo), "*"))

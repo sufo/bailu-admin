@@ -8,7 +8,7 @@
 package entity
 
 import (
-	"bailu/global/consts"
+	"github.com/sufo/bailu-admin/global/consts"
 	"encoding/json"
 	"time"
 )

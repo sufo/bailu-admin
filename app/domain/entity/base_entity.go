@@ -8,8 +8,8 @@
 package entity
 
 import (
-	"bailu/app/core/appctx"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"gorm.io/gorm"
 	"reflect"
 	"time"

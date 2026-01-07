@@ -9,8 +9,8 @@ package service
 
 import (
 	"github.com/google/wire"
-	"bailu/app/service/message"
-	"bailu/app/service/sys"
+	"github.com/sufo/bailu-admin/app/service/message"
+	"github.com/sufo/bailu-admin/app/service/sys"
 )
 
 var ServiceSet = wire.NewSet(

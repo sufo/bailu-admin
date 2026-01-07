@@ -10,9 +10,9 @@ package dict
 import (
 	"encoding/json"
 	"github.com/google/wire"
-	"bailu/app/domain/entity"
-	"bailu/global/consts"
-	"bailu/pkg/store"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/store"
 	"time"
 )
 

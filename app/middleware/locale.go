@@ -9,8 +9,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"bailu/app/config"
-	"bailu/pkg/i18n"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/pkg/i18n"
 )
 
 func LocaleMiddleware() gin.HandlerFunc {

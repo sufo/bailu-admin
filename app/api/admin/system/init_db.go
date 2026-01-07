@@ -8,10 +8,10 @@
 package system
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/resp"
-	"bailu/app/service/sys"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/service/sys"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"go.uber.org/zap"

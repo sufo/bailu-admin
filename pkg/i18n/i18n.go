@@ -47,7 +47,7 @@ package i18n
 import (
 	"errors"
 	"fmt"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/utils"
 	"os"
 	"strings"
 )

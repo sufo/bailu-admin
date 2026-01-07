@@ -8,8 +8,8 @@
 package middleware
 
 import (
-	"bailu/global/consts"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/utils"
 	"github.com/gin-gonic/gin"
 )
 

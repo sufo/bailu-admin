@@ -8,10 +8,10 @@
 package app
 
 import (
-	"bailu/app/api/admin/monitor"
-	"bailu/app/router"
-	"bailu/app/service/cron"
-	"bailu/app/service/sys"
+	"github.com/sufo/bailu-admin/app/api/admin/monitor"
+	"github.com/sufo/bailu-admin/app/router"
+	"github.com/sufo/bailu-admin/app/service/cron"
+	"github.com/sufo/bailu-admin/app/service/sys"
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"

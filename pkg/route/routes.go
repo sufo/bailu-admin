@@ -11,7 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"bailu/docs"
+	"github.com/sufo/bailu-admin/docs"
 	"strings"
 )
 

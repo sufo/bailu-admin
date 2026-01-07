@@ -8,9 +8,9 @@
 package middleware
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/resp"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"

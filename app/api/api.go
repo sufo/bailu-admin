@@ -9,10 +9,10 @@ package api
 
 import (
 	"github.com/google/wire"
-	"bailu/app/api/admin/content"
-	"bailu/app/api/admin/mine"
-	"bailu/app/api/admin/monitor"
-	"bailu/app/api/admin/system"
+	"github.com/sufo/bailu-admin/app/api/admin/content"
+	"github.com/sufo/bailu-admin/app/api/admin/mine"
+	"github.com/sufo/bailu-admin/app/api/admin/monitor"
+	"github.com/sufo/bailu-admin/app/api/admin/system"
 )
 
 var APISet = wire.NewSet(

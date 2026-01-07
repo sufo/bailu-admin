@@ -8,7 +8,7 @@
 package cron
 
 import (
-	"bailu/app/service/cron/jobs"
+	"github.com/sufo/bailu-admin/app/service/cron/jobs"
 	"github.com/google/wire"
 )
 

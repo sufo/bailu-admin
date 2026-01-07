@@ -8,11 +8,11 @@
 package sys
 
 import (
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	"bailu/app/domain/repo/base"
-	"bailu/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/resp"
 	"context"
 	"github.com/google/wire"
 	"github.com/mssola/user_agent"

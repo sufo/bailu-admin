@@ -9,10 +9,10 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"bailu/app/api/admin/monitor"
-	"bailu/app/domain/entity"
-	"bailu/global/consts"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/api/admin/monitor"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/log"
 )
 
 func SSEMiddleware(stream *monitor.Event) gin.HandlerFunc {

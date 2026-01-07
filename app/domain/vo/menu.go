@@ -7,7 +7,7 @@
 
 package vo
 
-import "bailu/app/domain/entity"
+import "github.com/sufo/bailu-admin/app/domain/entity"
 
 type Route struct {
 	Name      string   `json:"name"` //路由名称

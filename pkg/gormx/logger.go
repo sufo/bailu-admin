@@ -8,8 +8,8 @@ import (
 	"gorm.io/gorm/utils"
 	"io/ioutil"
 	"log"
-	c "bailu/app/config"
-	_Log "bailu/pkg/log"
+	c "github.com/sufo/bailu-admin/app/config"
+	_Log "github.com/sufo/bailu-admin/pkg/log"
 	"os"
 	"time"
 )

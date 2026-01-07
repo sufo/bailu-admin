@@ -8,12 +8,12 @@
 package cmd
 
 import (
-	"bailu/app/config"
-	"bailu/app/core/appctx"
-	"bailu/cmd/admin"
-	"bailu/global"
-	"bailu/global/consts"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/cmd/admin"
+	"github.com/sufo/bailu-admin/global"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/utils"
 	"context"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"

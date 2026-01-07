@@ -8,11 +8,11 @@
 package admin
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/entity"
-	"bailu/global/consts"
-	respErr "bailu/pkg/exception"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/global/consts"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"

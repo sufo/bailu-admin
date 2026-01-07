@@ -9,7 +9,7 @@ package mail
 
 import (
 	"errors"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"strings"
 	"time"
 

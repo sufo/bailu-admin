@@ -8,7 +8,7 @@
 package route
 
 import (
-	"bailu/global"
+	"github.com/sufo/bailu-admin/global"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go/ast"

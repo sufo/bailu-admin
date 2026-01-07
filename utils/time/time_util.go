@@ -10,7 +10,7 @@ package time
 import (
 	"fmt"
 	"math"
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"net/http"
 	"strconv"
 	"time"

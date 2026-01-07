@@ -8,9 +8,9 @@
 package core
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/entity"
-	"bailu/pkg/gormx"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/pkg/gormx"
 	"errors"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

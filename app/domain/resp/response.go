@@ -13,11 +13,11 @@ package resp
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"bailu/app/config"
-	"bailu/app/domain/resp/status"
-	"bailu/global/consts"
-	"bailu/pkg/exception"
-	"bailu/pkg/i18n"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/resp/status"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/pkg/i18n"
 	"net/http"
 )
 

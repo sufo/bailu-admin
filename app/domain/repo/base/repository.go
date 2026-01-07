@@ -8,12 +8,12 @@
 package base
 
 import (
-	"bailu/app/core/appctx"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo/util"
-	"bailu/app/domain/resp"
-	"bailu/pkg/log"
-	"bailu/utils/page"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo/util"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils/page"
 	"context"
 	"database/sql"
 	"fmt"

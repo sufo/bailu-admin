@@ -8,7 +8,7 @@
 package mq
 
 import (
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"

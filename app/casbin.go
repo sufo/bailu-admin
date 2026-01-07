@@ -10,7 +10,7 @@ package app
 import (
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/persist"
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"time"
 )
 

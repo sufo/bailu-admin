@@ -10,8 +10,8 @@ package util
 import (
 	"errors"
 	"gorm.io/gorm"
-	"bailu/app/domain/resp"
-	pagination "bailu/utils/page"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	pagination "github.com/sufo/bailu-admin/utils/page"
 )
 
 type PageQuery struct {

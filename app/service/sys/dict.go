@@ -11,14 +11,14 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/wire"
-	"bailu/app/config"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	"bailu/app/domain/repo/base"
-	"bailu/app/domain/resp"
-	base2 "bailu/app/service/base"
-	respErr "bailu/pkg/exception"
-	"bailu/utils/dict"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	base2 "github.com/sufo/bailu-admin/app/service/base"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/utils/dict"
 )
 
 var DictSet = wire.NewSet(wire.Struct(new(DictOption), "*"), NewDictService)

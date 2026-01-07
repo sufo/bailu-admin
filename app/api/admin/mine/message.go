@@ -8,14 +8,14 @@
 package mine
 
 import (
-	"bailu/app/api/admin"
-	"bailu/app/domain/dto"
-	"bailu/app/domain/resp"
-	"bailu/app/service/message"
-	respErr "bailu/pkg/exception"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+	"github.com/sufo/bailu-admin/app/api/admin"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/service/message"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
 )
 
 var MessageSet = wire.NewSet(wire.Struct(new(Message), "*"))

@@ -1,4 +1,4 @@
-module bailu
+module github.com/sufo/bailu-admin
 
 go 1.21.0
 
@@ -32,7 +32,6 @@ require (
 	github.com/mssola/user_agent v0.6.0
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.6.1
-	github.com/samber/lo v1.47.0
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/spf13/viper v1.19.0
 	github.com/swaggo/files v1.0.1

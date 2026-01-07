@@ -8,15 +8,15 @@
 package app
 
 import (
-	"bailu/app/core"
-	"bailu/app/middleware"
-	"bailu/global"
-	respErr "bailu/pkg/exception"
-	"bailu/pkg/i18n"
-	"bailu/pkg/ip2region"
-	"bailu/pkg/mq"
-	"bailu/pkg/store"
-	"bailu/pkg/translate"
+	"github.com/sufo/bailu-admin/app/core"
+	"github.com/sufo/bailu-admin/app/middleware"
+	"github.com/sufo/bailu-admin/global"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/pkg/i18n"
+	"github.com/sufo/bailu-admin/pkg/ip2region"
+	"github.com/sufo/bailu-admin/pkg/mq"
+	"github.com/sufo/bailu-admin/pkg/store"
+	"github.com/sufo/bailu-admin/pkg/translate"
 	"context"
 	"crypto/tls"
 	"fmt"
@@ -25,7 +25,7 @@ import (
 	"go.uber.org/zap"
 	"os"
 	//_log "log"
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"net/http"
 	"time"
 )

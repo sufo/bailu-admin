@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
-	"bailu/app/config"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"strings"
 	"time"
 )

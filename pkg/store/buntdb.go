@@ -8,9 +8,9 @@
 package store
 
 import (
-	"bailu/app/config"
-	"bailu/global/consts"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/utils"
 	"github.com/tidwall/buntdb"
 	"os"
 	"path/filepath"

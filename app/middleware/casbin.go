@@ -8,12 +8,12 @@
 package middleware
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/resp"
-	"bailu/global/consts"
-	respErr "bailu/pkg/exception"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/global/consts"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 )

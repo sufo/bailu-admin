@@ -8,7 +8,7 @@
 package jobs
 
 import (
-	"bailu/app/service/sys"
+	"github.com/sufo/bailu-admin/app/service/sys"
 	"context"
 )
 

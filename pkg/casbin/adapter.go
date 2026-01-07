@@ -13,9 +13,9 @@ import (
 	"github.com/casbin/casbin/v2/model"
 	"github.com/casbin/casbin/v2/persist"
 	"github.com/google/wire"
-	"bailu/app/domain/repo"
-	"bailu/app/domain/repo/base"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/pkg/log"
 )
 
 var _ persist.Adapter = (*CasbinAdapter)(nil)

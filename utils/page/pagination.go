@@ -8,8 +8,8 @@
 package page
 
 import (
-	"bailu/app/core/appctx"
-	respErr "bailu/pkg/exception"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"

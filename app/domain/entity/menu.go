@@ -7,7 +7,7 @@
 
 package entity
 
-import "bailu/utils/types"
+import "github.com/sufo/bailu-admin/utils/types"
 
 var _ IModel = (*Menu)(nil)
 

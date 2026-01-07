@@ -10,10 +10,10 @@ package repo
 import (
 	"context"
 	"gorm.io/gorm"
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo/base"
-	"bailu/app/domain/repo/util"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/repo/util"
 )
 
 // var MenuSet = wire.NewSet(wire.Struct(new(MenuRepo), "*"))

@@ -8,8 +8,8 @@
 package config
 
 import (
-	"bailu/global"
-	"bailu/global/consts"
+	"github.com/sufo/bailu-admin/global"
+	"github.com/sufo/bailu-admin/global/consts"
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"

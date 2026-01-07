@@ -8,10 +8,10 @@
 package monitor
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/resp"
-	"bailu/app/domain/vo"
-	"bailu/pkg/log"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/domain/vo"
+	"github.com/sufo/bailu-admin/pkg/log"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

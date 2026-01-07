@@ -8,8 +8,8 @@
 package repo
 
 import (
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
 	"context"
 	"gorm.io/gorm"
 )

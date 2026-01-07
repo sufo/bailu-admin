@@ -8,7 +8,7 @@
 package util
 
 import (
-	"bailu/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/core/appctx"
 	"context"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"

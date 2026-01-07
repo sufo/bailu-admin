@@ -8,14 +8,14 @@
 package base
 
 import (
-	"bailu/app/core/appctx"
-	"bailu/app/domain/entity"
-	"bailu/global/consts"
-	respErr "bailu/pkg/exception"
-	"bailu/pkg/log"
-	"bailu/utils"
-	"bailu/utils/page"
-	"bailu/utils/types"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/global/consts"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils"
+	"github.com/sufo/bailu-admin/utils/page"
+	"github.com/sufo/bailu-admin/utils/types"
 	"context"
 	"fmt"
 	"reflect"

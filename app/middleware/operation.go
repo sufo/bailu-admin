@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"bailu/app/domain/entity"
-	"bailu/app/service/sys"
-	"bailu/global/consts"
-	"bailu/pkg/jwt"
-	"bailu/pkg/log"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/service/sys"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/jwt"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils"
 	"bytes"
 	"encoding/json"
 	"github.com/gin-gonic/gin"

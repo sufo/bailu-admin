@@ -8,9 +8,9 @@
 package vo
 
 import (
-	"bailu/global"
-	"bailu/utils"
-	time2 "bailu/utils/time"
+	"github.com/sufo/bailu-admin/global"
+	"github.com/sufo/bailu-admin/utils"
+	time2 "github.com/sufo/bailu-admin/utils/time"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/shirou/gopsutil/v3/cpu"

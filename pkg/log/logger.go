@@ -1,7 +1,7 @@
 package log
 
 import (
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 	"fmt"
 	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"

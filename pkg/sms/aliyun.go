@@ -11,7 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
-	"bailu/app/config"
+	"github.com/sufo/bailu-admin/app/config"
 )
 
 type AliyunClient struct {

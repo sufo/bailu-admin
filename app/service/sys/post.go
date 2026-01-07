@@ -10,13 +10,13 @@ package sys
 import (
 	"context"
 	"github.com/google/wire"
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	"bailu/app/domain/repo/base"
-	"bailu/app/domain/resp"
-	"bailu/app/domain/vo"
-	base2 "bailu/app/service/base"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/domain/vo"
+	base2 "github.com/sufo/bailu-admin/app/service/base"
 )
 
 var PostSet = wire.NewSet(wire.Struct(new(PostOption), "*"), NewPostService)

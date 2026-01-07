@@ -10,9 +10,9 @@ package captcha
 import (
 	"github.com/mojocn/base64Captcha"
 	"go.uber.org/zap"
-	"bailu/app/config"
-	"bailu/pkg/log"
-	"bailu/pkg/store"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/pkg/store"
 	"time"
 )
 

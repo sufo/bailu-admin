@@ -12,9 +12,9 @@ import (
 	"fmt"
 	"github.com/google/wire"
 	"math/rand"
-	"bailu/app/config"
-	"bailu/pkg/sms"
-	"bailu/pkg/store"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/pkg/sms"
+	"github.com/sufo/bailu-admin/pkg/store"
 	"time"
 )
 

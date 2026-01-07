@@ -7,7 +7,7 @@
 
 package dto
 
-import "bailu/global/consts"
+import "github.com/sufo/bailu-admin/global/consts"
 
 type RoleParams struct {
 	Name    string `json:"name" form:"name" query:"name,like"`

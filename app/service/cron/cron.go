@@ -14,16 +14,16 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"bailu/app/domain/dto"
-	"bailu/app/domain/entity"
-	"bailu/app/service/sys"
-	"bailu/pkg/log"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/domain/dto"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/service/sys"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils"
 	"time"
 )
 
 import (
-	"bailu/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/repo"
 	"sync"
 )
 

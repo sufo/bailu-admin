@@ -1,9 +1,9 @@
 package upload
 
 import (
-	"bailu/app/config"
-	"bailu/pkg/log"
-	"bailu/utils"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/pkg/log"
+	"github.com/sufo/bailu-admin/utils"
 	"errors"
 	"go.uber.org/zap"
 	"io"

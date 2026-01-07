@@ -7,11 +7,11 @@
 package base
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo/base"
-	"bailu/global/consts"
-	respErr "bailu/pkg/exception"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/global/consts"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
 	"context"
 	"net/http"
 )

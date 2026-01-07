@@ -8,9 +8,9 @@
 package respErr
 
 import (
-	"bailu/app/config"
-	"bailu/app/domain/resp/status"
-	"bailu/global/consts"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/domain/resp/status"
+	"github.com/sufo/bailu-admin/global/consts"
 	"errors"
 	"fmt"
 	"net/http"

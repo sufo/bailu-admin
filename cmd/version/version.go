@@ -11,7 +11,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/urfave/cli/v2"
-	"bailu/global/consts"
+	"github.com/sufo/bailu-admin/global/consts"
 )
 
 func StartCmd(ctx context.Context) *cli.Command {

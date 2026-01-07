@@ -12,12 +12,12 @@ import (
 	"fmt"
 	"github.com/google/wire"
 	"mime/multipart"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	repoBase "bailu/app/domain/repo/base"
-	"bailu/app/domain/resp"
-	"bailu/app/service/base"
-	"bailu/utils/upload"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	repoBase "github.com/sufo/bailu-admin/app/domain/repo/base"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/app/service/base"
+	"github.com/sufo/bailu-admin/utils/upload"
 )
 
 var FileSet = wire.NewSet(wire.Struct(new(FileOption), "*"), NewFileService)

@@ -8,10 +8,10 @@
 package sys
 
 import (
-	"bailu/app/domain/entity"
-	"bailu/app/domain/repo"
-	"bailu/app/domain/resp"
-	respErr "bailu/pkg/exception"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/repo"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	respErr "github.com/sufo/bailu-admin/pkg/exception"
 	"context"
 	"github.com/google/wire"
 	"strconv"

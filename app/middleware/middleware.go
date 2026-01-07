@@ -8,10 +8,10 @@
 package middleware
 
 import (
-	"bailu/app/domain/entity"
-	"bailu/app/domain/resp"
-	"bailu/global/consts"
-	jwtProvider "bailu/pkg/jwt"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/global/consts"
+	jwtProvider "github.com/sufo/bailu-admin/pkg/jwt"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"strings"

@@ -10,8 +10,8 @@ package admin
 import (
 	"context"
 	"github.com/urfave/cli/v2"
-	"bailu/app"
-	"bailu/global"
+	"github.com/sufo/bailu-admin/app"
+	"github.com/sufo/bailu-admin/global"
 )
 
 func StartCmd(ctx context.Context) *cli.Command {

@@ -8,12 +8,12 @@
 package middleware
 
 import (
-	"bailu/app/config"
-	"bailu/app/core/appctx"
-	"bailu/app/domain/entity"
-	"bailu/app/domain/resp"
-	"bailu/global/consts"
-	"bailu/pkg/jwt"
+	"github.com/sufo/bailu-admin/app/config"
+	"github.com/sufo/bailu-admin/app/core/appctx"
+	"github.com/sufo/bailu-admin/app/domain/entity"
+	"github.com/sufo/bailu-admin/app/domain/resp"
+	"github.com/sufo/bailu-admin/global/consts"
+	"github.com/sufo/bailu-admin/pkg/jwt"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 )
