@@ -131,7 +131,7 @@ type UnionMessage interface {
 //			//return result.(*resp.PageResult[entity.ChatSession]), err
 //			data := result.(*resp.PageResult[entity.ChatSession])
 //			for _, c := range data.List {
-//				lastReadTime := global.Ternary[types.JSONTime](c.User1Id == user.ID, c.LastRead1Time, c.LastRead2Time)
+//				lastReadTime := global.Ternary[time.Time](c.User1Id == user.ID, c.LastRead1Time, c.LastRead2Time)
 //				msg := vo.Message{
 //					ID:      0,
 //					Icon:    "",

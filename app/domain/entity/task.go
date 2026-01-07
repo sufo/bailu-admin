@@ -7,7 +7,7 @@
 
 package entity
 
-import "bailu/utils/types"
+import "time"
 
 const (
 	NO_NOTIFY       = 1
@@ -50,7 +50,7 @@ type Task struct {
 	//NotifyReceiverEmail string         `json:"notifyReceiverEmail" gorm:"comment:接收者邮箱地址(多个用,分割)"`
 	NotifyKeyword string         `json:"notifyKeyword" gorm:"comment:通知匹配关键字(多个用,分割)"`
 	Remark        string         `json:"remark" gorm:"comment:备注"`
-	LastExecTime  types.JSONTime `json:"lastExecTime" gorm:"comment:最近一次执行时间;default:null"`
+	LastExecTime  time.Time `json:"lastExecTime" gorm:"comment:最近一次执行时间;default:null"`
 	NextTime      string         `json:"nextTime" gorm:"-"` //下次执行时间，通过分析cron表达式得出
 	BaseEntity
 }

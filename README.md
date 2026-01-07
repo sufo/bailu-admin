@@ -1,10 +1,7 @@
-# Bailu Backend
+# Bailu Admin
 
 <p align="center">
-  <strong>A lightweight, production-ready, and feature-rich backend boilerplate.</strong>
-</p>
-<p align="center">
-  Built with Go, Gin, GORM, and Wire, Bailu is designed to help you quickly launch a secure and scalable admin panel, RESTful API, or microservice.
+  <strong>A general management system with separate frontend and backend, built on Gin, Vue, and Naive UI.</strong>
 </p>
 
 <p align="center">
@@ -22,16 +19,19 @@
 
 ---
 
-## ⚙️ Technology Stack
+## ✨ Features
 
--   **Web Framework**: Gin
--   **ORM**: GORM
--   **Database**: MySQL
--   **Dependency Injection**: Google Wire
--   **Permissions Management**: Casbin
--   **Authentication**: JWT
--   **Configuration Management**: Viper
--   **Logging**: Zap
+-   **High-performance API**: Built on the Gin framework for fast and efficient routing.
+-   **RESTful API Design**: Adheres to RESTful principles for clear, standardized, and scalable API endpoints.
+-   **Flexible Data Access**: Utilizes GORM for powerful and developer-friendly database interactions.
+-   **Role-Based Access Control (RBAC)**: Integrates Casbin for fine-grained permission management.
+-   **JWT Authentication**: Uses JWT for secure API authentication, with token management in Redis.
+-   **Clean Architecture**: Employs Google Wire for compile-time dependency injection, promoting modular and maintainable code.
+-   **Standardized JSON Responses**: Provides helpers for consistent and predictable API responses.
+-   **API Documentation**: Generates interactive API documentation using Swagger (OpenAPI).
+-   **Dynamic Query Generation**: Automatically builds database queries from request DTOs, reducing boilerplate code.
+-   **Structured Logging**: Uses Zap for high-performance, structured logging.
+-   **Flexible Configuration**: Manages application configuration via Viper, supporting multiple file formats.
 
 
 ## ✨ Usage Examples

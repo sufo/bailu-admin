@@ -25,7 +25,6 @@ import (
 	"bailu/pkg/mq"
 	"bailu/pkg/store"
 	"bailu/utils"
-	"bailu/utils/types"
 	"strings"
 	"time"
 )
@@ -148,7 +147,7 @@ func (a *NoticeService) UserDel(ctx context.Context, msgIds []uint64) error {
 //		user := appctx.GetAuthUser[entity.OnlineUserDto](ctx)
 //		notice.SenderId = user.ID
 //		notice.SendStatus = "1"
-//		notice.SendTime = types.JSONTime{time.Now()} //这里设置不太准确，因为消息会先进入队列
+//		notice.SendTime = time.Now() //这里设置不太准确，因为消息会先进入队列
 //
 //		//插入send
 //		var noticeSends = make([]entity.NoticeSend, 0)
@@ -261,7 +260,7 @@ func (n *NoticeService) releaseNotice(ctx context.Context, notice *entity.Notice
 	user := appctx.GetAuthUser[entity.OnlineUserDto](ctx)
 	notice.SenderId = user.ID
 	notice.SendStatus = "1"
-	notice.SendTime = types.JSONTime{time.Now()} //这里设置不太准确，因为消息会先进入队列
+	notice.SendTime = time.Now() //这里设置不太准确，因为消息会先进入队列
 
 	//插入send
 	var noticeSends = make([]entity.NoticeSend, 0)
@@ -360,7 +359,7 @@ func (n *NoticeService) CancelNotice(ctx context.Context, id uint64) error {
 		if err != nil {
 			return err
 		}
-		notice.CancelTime = types.JSONTime{time.Now()}
+		notice.CancelTime = time.Now()
 		notice.SendStatus = "2"
 		n.NoticeRepo.Update(ctx, notice)
 		err = n.NoticeSendRepo.Where(ctx, "msg_id=?", notice.ID).

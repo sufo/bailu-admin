@@ -7,7 +7,7 @@
 
 package entity
 
-import "bailu/utils/types"
+import "time"
 
 var _ IModel = (*DictItem)(nil)
 
@@ -26,7 +26,7 @@ type Log struct {
 	Result       string         `json:"result" gorm:"comment:返回结果"`
 	Status       uint           `json:"status" gorm:"type:tinyint(1);comment:操作状态（0正常 1异常）"`
 	ErrorMsg     string         `json:"errorMsg" gorm:"comment:错误消息"`
-	OperTime     types.JSONTime `json:"operTime" gorm:"comment:操作时间"`
+	OperTime     time.Time `json:"operTime" gorm:"comment:操作时间"`
 }
 
 var LogTN = "sys_log"

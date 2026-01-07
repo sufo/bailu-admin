@@ -9,8 +9,8 @@
 package entity
 
 import (
-	"bailu/utils/types"
 	"gorm.io/gorm"
+	"time"
 )
 
 var _ IModel = (*Notice)(nil)
@@ -26,17 +26,17 @@ type Notice struct {
 	Receivers     string         `json:"receivers" gorm:"comment:接收者id(id类型由Group_type决定，多个以逗号分割)"`
 	SendScope     string         `json:"sendScope" gorm:"size:30;default:null;comment:发送范围类型（all所有人、user指定用户、role角色、depart部门等），见字典message_scope_type"`
 	SendStatus    string         `json:"sendStatus" gorm:"size:1;default:'0';comment:发布状态（0未发布，1已发布，2已撤销）"`
-	StartTime     types.JSONTime `json:"startTime" gorm:"default:null;comment:开始时间"`
-	EndTime       types.JSONTime `json:"endTime" gorm:"default:null;comment:结束时间"`
+	StartTime     time.Time `json:"startTime" gorm:"default:null;comment:开始时间"`
+	EndTime       time.Time `json:"endTime" gorm:"default:null;comment:结束时间"`
 	NotifyChannel string         `json:"notifyChannel" gorm:"default:'web';size:20;default:'web';comment:通知方式：web,app,mail,sms等"`
-	ScheduledTime types.JSONTime `json:"scheduledTime" gorm:"default:null;comment:指定发送时间。如果该通知/公告是特定时间发送的"`
-	SendTime      types.JSONTime `json:"sendTime" gorm:"default:null;comment:发布时间"`
-	CancelTime    types.JSONTime `json:"cancelTime" gorm:"default:null;comment:撤销时间"`
+	ScheduledTime time.Time `json:"scheduledTime" gorm:"default:null;comment:指定发送时间。如果该通知/公告是特定时间发送的"`
+	SendTime      time.Time `json:"sendTime" gorm:"default:null;comment:发布时间"`
+	CancelTime    time.Time `json:"cancelTime" gorm:"default:null;comment:撤销时间"`
 	Icon          string         `json:"icon" gorm:"-"`
 	ReadFlag      int            `json:"readFlag" gorm:"-"`
-	ReadTime      types.JSONTime `json:"readTime" gorm:"-"`
+	ReadTime      time.Time `json:"readTime" gorm:"-"`
 	UpdateBy      uint64         `json:"-" gorm:"column:update_by;default:0;comment:更新者"`
-	CreatedAt     types.JSONTime `json:"createdAt"`
+	CreatedAt     time.Time `json:"createdAt"`
 	DeletedAt     gorm.DeletedAt `json:"-"`
 }
 
@@ -58,8 +58,8 @@ type NoticeSend struct {
 	ReceiveId uint64 `json:"receiveId" gorm:"index;comment:接收者id"`
 	ReadFlag  int    `json:"readFlag" gorm:"type:tinyint(4);default:0;comment:阅读状态（0未读，1已读, 2删除）"`
 	//StarFlag  uint8     `json:"starFlag" gorm:"type:tinyint(4);comment:是否标星,1是标星消息"`
-	ReadTime  types.JSONTime `json:"readTime" gorm:"default:null;comment:查看时间或者删除时间"`
-	CreatedAt types.JSONTime `json:"createdAt"`
+	ReadTime  time.Time `json:"readTime" gorm:"default:null;comment:查看时间或者删除时间"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
 var NoticeSendTN = "msg_notice_send"
@@ -79,7 +79,7 @@ type RemindSubscription struct {
 	SourceId   uint64         `json:"sourceId" gorm:"comment:目标id"`
 	Action     string         `json:"action" gorm:"size:50;comment:动作类型（ 1、点赞  2、评论 3、回复 4、@  5、关注' 等）"`
 	UserId     uint64         `json:"userId" gorm:"comment:订阅用户"`
-	CreatedAt  types.JSONTime `json:"createdAt"`
+	CreatedAt  time.Time `json:"createdAt"`
 }
 
 var RemindSubscriptionTN = "remind_subscription"

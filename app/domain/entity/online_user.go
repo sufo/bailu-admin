@@ -9,8 +9,8 @@ package entity
 
 import (
 	"bailu/global/consts"
-	"bailu/utils/types"
 	"encoding/json"
+	"time"
 )
 
 type OnlineUserDto struct {
@@ -31,7 +31,7 @@ type OnlineUserDto struct {
 	/**
 	 * 登录时间
 	 */
-	LoginTime types.JSONTime `json:"loginTime"`
+	LoginTime time.Time `json:"loginTime"`
 }
 
 func (o *OnlineUserDto) IsSuper() bool {

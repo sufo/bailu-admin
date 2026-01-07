@@ -7,7 +7,7 @@
 
 package entity
 
-import "bailu/utils/types"
+import "time"
 
 type LoginInfo struct {
 	ID uint64 `json:"id" gorm:"primarykey"`
@@ -19,7 +19,7 @@ type LoginInfo struct {
 	Os        string         `json:"os" gorm:"size:50;comment:操作系统"`
 	Status    int            `json:"status" gorm:"type:tinyint(4);comment:登录状态（0成功 1失败）"`
 	Msg       string         `json:"msg" gorm:"comment:提示消息"`
-	LoginTime types.JSONTime `json:"loginTime" gorm:"comment:访问时间"`
+	LoginTime time.Time `json:"loginTime" gorm:"comment:访问时间"`
 }
 
 var LoginInfoTN = "sys_login_info"

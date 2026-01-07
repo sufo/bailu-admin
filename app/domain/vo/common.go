@@ -7,7 +7,7 @@
 
 package vo
 
-import "bailu/utils/types"
+import "time"
 
 // 下拉菜单
 type Option[T uint64 | string] struct {
@@ -33,7 +33,7 @@ type Message struct {
 	Avatar  string         `json:"avatar"`
 	Title   string         `json:"title"`
 	Content string         `json:"content"`
-	Date    types.JSONTime `json:"date"`
+	Date    time.Time `json:"date"`
 	IsRead  bool           `json:"isRead"`
 	ToId    uint64         `json:"toId"`   //chat
 	ToName  string         `json:"toName"` //chat

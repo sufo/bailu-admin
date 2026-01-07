@@ -23,7 +23,6 @@ import (
 	"bailu/pkg/store"
 	"bailu/utils"
 	"bailu/utils/page"
-	"bailu/utils/types"
 	"net/http"
 	"sort"
 	"strings"
@@ -91,7 +90,7 @@ func (online *OnlineService) List(ctx context.Context, userName string, addr str
 		}
 	}
 	//排序
-	sort.SliceStable(users, func(i, j int) bool { return users[i].LoginTime.After(users[i].LoginTime.Time) })
+	sort.SliceStable(users, func(i, j int) bool { return users[i].LoginTime.After(users[j].LoginTime) })
 
 	var pageIndex, pageSize int
 	if p, exist := appctx.GetPageCtx[page.Pagination](ctx); exist {
@@ -139,7 +138,7 @@ func (online *OnlineService) Save(user *entity.User, request *http.Request, toke
 	onlineUserDto.Os = ua.OS()
 	onlineUserDto.Addr = utils.GetAddr(user.Ip)
 	onlineUserDto.Token = token
-	onlineUserDto.LoginTime = types.JSONTime{time.Now()}
+	onlineUserDto.LoginTime = time.Now()
 	//var roles []uint64
 	//for i, e := range user.Roles {
 	//	roles[i] = e.ID

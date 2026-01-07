@@ -11,7 +11,6 @@ import (
 	"bailu/app/domain/dto"
 	"bailu/app/domain/entity"
 	"bailu/app/domain/repo"
-	"bailu/utils/types"
 	"time"
 )
 
@@ -26,7 +25,7 @@ func (j *JobLog) CreateTaskLog(taskModel *entity.Task, status uint8) (uint64, er
 	taskLogModel.TaskName = taskModel.Name
 	taskLogModel.TaskGroup = taskModel.Group
 	taskLogModel.InvokeTarget = taskModel.InvokeTarget
-	taskLogModel.StartTime = types.JSONTime{time.Now()}
+	taskLogModel.StartTime = time.Now()
 	taskLogModel.Status = status
 	return j.taskLogRepo.CreateTaskLog(taskLogModel)
 }

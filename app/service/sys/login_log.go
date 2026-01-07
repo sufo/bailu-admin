@@ -17,7 +17,6 @@ import (
 	"bailu/app/domain/repo/base"
 	"bailu/app/domain/resp"
 	"bailu/utils"
-	"bailu/utils/types"
 	"time"
 )
 
@@ -68,7 +67,7 @@ func (l *LoginLogService) Create(c *gin.Context, username string, status int, ms
 	log.Os = ua.OS()
 	log.Ip = c.ClientIP()
 	log.Addr = utils.GetAddr(log.Ip)
-	log.LoginTime = types.JSONTime{time.Now()}
+	log.LoginTime = time.Now()
 	log.Msg = msg
 	err := l.Repo.Create(c.Request.Context(), &log)
 	return err

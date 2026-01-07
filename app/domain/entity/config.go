@@ -7,7 +7,7 @@
 
 package entity
 
-import "bailu/utils/types"
+import "time"
 
 type SysConfig struct {
 	ID        uint64         `json:"id" gorm:"primarykey"`
@@ -19,8 +19,8 @@ type SysConfig struct {
 	Remark    string         `json:"remark" gorm:"size:500;comment:备注"`
 	CreateBy  uint64         `json:"-" gorm:"column:create_by;default:0;comment:创建者"`
 	UpdateBy  uint64         `json:"-" gorm:"column:update_by;default:0;comment:更新者"`
-	CreatedAt types.JSONTime `json:"createdAt"` //`gorm:"default:null"`
-	UpdatedAt types.JSONTime `json:"updatedAt"` //`gorm:"default:null"`
+	CreatedAt time.Time `json:"createdAt"` //`gorm:"default:null"`
+	UpdatedAt time.Time `json:"updatedAt"` //`gorm:"default:null"`
 }
 
 var ConfigTN = "sys_config"

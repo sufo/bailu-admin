@@ -11,6 +11,7 @@ import (
 	"bailu/global/consts"
 	"bailu/utils/types"
 	"strings"
+	"time"
 )
 
 var _ IModel = (*User)(nil)
@@ -39,7 +40,7 @@ type User struct {
 	Ip            string                 `json:"ip,omitempty" gorm:"size:20;comment:用户最后登录ip"`
 	Status        uint8                  `json:"status" gorm:"type:tinyint(1);comment:是否启用(1:启用 2:禁用);default:0"`
 	Remark        string                 `json:"remark,omitempty" gorm:"size:200;comment:备注信息"`
-	LastLoginTime types.JSONTime         `json:"lastLoginTime" gorm:"default null,comment:登录时间"`
+	LastLoginTime time.Time         `json:"lastLoginTime" gorm:"default null,comment:登录时间"`
 	//创建时使用
 	//RoleIds types.Uint64EmptySlice `json:"roleIds" gorm:"-"`
 	//PostIds types.Uint64EmptySlice `json:"postIds" gorm:"-"`

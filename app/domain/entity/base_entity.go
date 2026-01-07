@@ -10,9 +10,9 @@ package entity
 import (
 	"bailu/app/core/appctx"
 	"bailu/pkg/log"
-	"bailu/utils/types"
 	"gorm.io/gorm"
 	"reflect"
+	"time"
 )
 
 const (
@@ -72,8 +72,8 @@ DeletedAt: 删除时间
 */
 type Model struct {
 	//ID        uint64         `json:"id,string" gorm:"primarykey"`
-	CreatedAt types.JSONTime `json:"createdAt"` //`gorm:"default:null"`
-	UpdatedAt types.JSONTime `json:"updatedAt"` //`gorm:"default:null"`
+	CreatedAt time.Time `json:"createdAt"` //`gorm:"default:null"`
+	UpdatedAt time.Time `json:"updatedAt"` //`gorm:"default:null"`
 	DeletedAt gorm.DeletedAt `json:"-"`
 }
 
