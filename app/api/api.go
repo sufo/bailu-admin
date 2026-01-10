@@ -32,7 +32,6 @@ var APISet = wire.NewSet(
 	monitor.NewServerInfo,
 	monitor.NewOnlineUserApi,
 	monitor.NewTaskApi,
-	monitor.NewEvent,
 	system.NewSysConfigApi,
 	mine.MessageSet,
 	content.NewFileApi,

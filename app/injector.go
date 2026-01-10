@@ -8,13 +8,12 @@
 package app
 
 import (
-	"github.com/sufo/bailu-admin/app/api/admin/monitor"
-	"github.com/sufo/bailu-admin/app/router"
-	"github.com/sufo/bailu-admin/app/service/cron"
-	"github.com/sufo/bailu-admin/app/service/sys"
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+	"github.com/sufo/bailu-admin/app/router"
+	"github.com/sufo/bailu-admin/app/service/cron"
+	"github.com/sufo/bailu-admin/app/service/sys"
 	"go.uber.org/zap"
 )
 
@@ -28,5 +27,4 @@ type Injector struct {
 	Job            *cron.CronTask
 	Injector2Job   *cron.Inject2Jobs
 	CasbinEnforcer *casbin.SyncedEnforcer
-	SSE            *monitor.Event
 }

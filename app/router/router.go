@@ -48,7 +48,6 @@ type Router struct {
 	ConfigApi     *system.SysConfigApi
 	NoticeApi     *system.NoticeApi
 	UploadApi     *system.UploadApi
-	Event         *monitor.Event
 	Message       *mine.Message
 	FileApi       *content.FileApi
 }

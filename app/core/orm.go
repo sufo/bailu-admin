@@ -8,10 +8,10 @@
 package core
 
 import (
+	"errors"
 	"github.com/sufo/bailu-admin/app/config"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/pkg/gormx"
-	"errors"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -29,7 +29,13 @@ func InitGorm() (*gorm.DB, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	cleanFunc := func() {}
+	sqlDB, err := db.DB()
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanFunc := func() {
+		_ = sqlDB.Close()
+	}
 
 	if cfg.EnableAutoMigrate {
 		err2 := AutoMigrate(db)

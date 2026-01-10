@@ -8,6 +8,11 @@
 package app
 
 import (
+	"context"
+	"crypto/tls"
+	"fmt"
+	"github.com/fvbock/endless"
+	"github.com/google/gops/agent"
 	"github.com/sufo/bailu-admin/app/core"
 	"github.com/sufo/bailu-admin/app/middleware"
 	"github.com/sufo/bailu-admin/global"
@@ -17,11 +22,6 @@ import (
 	"github.com/sufo/bailu-admin/pkg/mq"
 	"github.com/sufo/bailu-admin/pkg/store"
 	"github.com/sufo/bailu-admin/pkg/translate"
-	"context"
-	"crypto/tls"
-	"fmt"
-	"github.com/fvbock/endless"
-	"github.com/google/gops/agent"
 	"go.uber.org/zap"
 	"os"
 	//_log "log"
@@ -96,7 +96,6 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	languages := map[string]string{
 		"en":    "English",
 		"zh-CN": "简体中文",
-		// "zh-TW": "繁体中文",
 	}
 	// The default instance initialized directly here
 	i18n.Init("app/locales/lang", "en", languages)
@@ -135,7 +134,6 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	InitHTTPServer(injector.Engine, injector.Logger)
 
 	return func() {
-		<-injector.SSE.ClosedClients //关闭sse
 		clearFunc()
 		clearMonitor()
 		//关闭redis连接
@@ -202,19 +200,3 @@ func Run(ctx context.Context, opts ...Opt) error {
 	}
 	return nil
 }
-
-//func Run() exception {
-//	state := 1
-//	sc := make(chan os.Signal, 1)
-//	signal.Notify(sc, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-//	clearFunc, err := Init()
-//	if err != nil {
-//		return err
-//	}
-//EXIT:
-//	for {
-//		sig := <-sc
-//
-//	}
-//
-//}

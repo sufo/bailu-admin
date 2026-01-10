@@ -203,7 +203,6 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		NoticeSrv: noticeService,
 	}
 	uploadApi := system.NewUploadApi(oss)
-	event := monitor.NewEvent()
 	messageService := &message.MessageService{
 		NoticeRepo:     noticeRepo,
 		NoticeSendRepo: noticeSendRepo,
@@ -242,7 +241,6 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		ConfigApi:     sysConfigApi,
 		NoticeApi:     noticeApi,
 		UploadApi:     uploadApi,
-		Event:         event,
 		Message:       mineMessage,
 		FileApi:       fileApi,
 	}
@@ -265,7 +263,6 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		Job:            cronTask,
 		Injector2Job:   inject2Jobs,
 		CasbinEnforcer: syncedEnforcer,
-		SSE:            event,
 	}
 	return injector, func() {
 		cleanup3()
