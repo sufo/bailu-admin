@@ -21,8 +21,8 @@ server:
   cert-file: ''
   # 证书密钥
   key-file: ''
-# 是否启用swagger
-swagger: false
+# 是否启用swagger, 前提是server.mode ！= "release" 这里才生效
+swagger: true
 
 # captcha configuration
 captcha:
