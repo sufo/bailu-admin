@@ -8,13 +8,13 @@
 package cmd
 
 import (
+	"context"
 	"github.com/sufo/bailu-admin/app/config"
 	"github.com/sufo/bailu-admin/app/core/appctx"
 	"github.com/sufo/bailu-admin/cmd/admin"
 	"github.com/sufo/bailu-admin/global"
 	"github.com/sufo/bailu-admin/global/consts"
 	"github.com/sufo/bailu-admin/utils"
-	"context"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"
 	"os"
@@ -26,16 +26,7 @@ import (
 ////go:generate go mod download
 
 // https://patorjk.com/software/taag/#p=testall&f=Graffiti&t=bailu
-const name = `
-   ▄▄▄▄███▄▄▄▄    ▄█  ███▄▄▄▄       ███        ▄████████ 
- ▄██▀▀▀███▀▀▀██▄ ███  ███▀▀▀██▄ ▀█████████▄   ███    ███ 
- ███   ███   ███ ███▌ ███   ███    ▀███▀▀██   ███    █▀  
- ███   ███   ███ ███▌ ███   ███     ███   ▀   ███        
- ███   ███   ███ ███▌ ███   ███     ███     ▀███████████ 
- ███   ███   ███ ███  ███   ███     ███              ███ 
- ███   ███   ███ ███  ███   ███     ███        ▄█    ███ 
-  ▀█   ███   █▀  █▀    ▀█   █▀     ▄████▀    ▄████████▀  
-`
+const name = "Bailu"
 
 func NewApp() *cli.App {
 	ctx := appctx.NewTagCtx(context.Background(), "__main__")
