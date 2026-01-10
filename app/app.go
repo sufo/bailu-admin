@@ -59,7 +59,7 @@ func SetVersion(s string) Opt {
 	}
 }
 
-func Init(ctx context.Context, opts ...Opt) (func(), error) {
+func Init(ctx context.Context, opts ...Opt) (*Injector, func(), error) {
 	var o options
 	for _, opt := range opts {
 		opt(&o)
@@ -75,7 +75,7 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	//wire inject
 	injector, clearFunc, err := BuildInjector(o.WWW)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	injector.Logger.Infof("Start server,#run_mode %s,#version %s,#pid %d", config.Conf.Server.Mode, o.Version, os.Getpid())
@@ -119,7 +119,7 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 	if config.Conf.Menu.Enable && config.Conf.Menu.Path != "" {
 		err = injector.MenuSrv.InitData(ctx, config.Conf.Menu.Path)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 	}
 
@@ -130,10 +130,7 @@ func Init(ctx context.Context, opts ...Opt) (func(), error) {
 		injector.Job.Start(ctx)
 	}()
 
-	//启动服务后会阻塞， 一些服务启动时的动作不要放在它后面
-	InitHTTPServer(injector.Engine, injector.Logger)
-
-	return func() {
+	return injector, func() {
 		clearFunc()
 		clearMonitor()
 		//关闭redis连接
@@ -164,7 +161,7 @@ func InitMonitor(logger *zap.SugaredLogger) func() {
 	return func() {}
 }
 
-func InitHTTPServer(handler http.Handler, logger *zap.SugaredLogger) func() {
+func InitHTTPServer(handler http.Handler, logger *zap.SugaredLogger) {
 	cfg := config.Conf.Server
 	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
 	s := endless.NewServer(addr, handler)
@@ -185,18 +182,20 @@ func InitHTTPServer(handler http.Handler, logger *zap.SugaredLogger) func() {
 	}
 	//err := s.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
-		panic(err)
+		logger.Errorf("HTTP server ListenAndServe error: %v", err)
 	}
-	return func() {}
 }
 
 func Run(ctx context.Context, opts ...Opt) error {
 	global.StartTime = time.Now() //记录启动时间
-	clearFunc, err := Init(ctx, opts...)
-	defer clearFunc()
+	injector, clearFunc, err := Init(ctx, opts...)
 	if err != nil {
 		fmt.Println(err)
 		return err
 	}
+	defer clearFunc()
+
+	InitHTTPServer(injector.Engine, injector.Logger)
+
 	return nil
 }
