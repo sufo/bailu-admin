@@ -11,8 +11,8 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/fvbock/endless"
 	"github.com/google/gops/agent"
+	"github.com/sufo/bailu-admin/app/config"
 	"github.com/sufo/bailu-admin/app/core"
 	"github.com/sufo/bailu-admin/app/middleware"
 	"github.com/sufo/bailu-admin/global"
@@ -23,10 +23,10 @@ import (
 	"github.com/sufo/bailu-admin/pkg/store"
 	"github.com/sufo/bailu-admin/pkg/translate"
 	"go.uber.org/zap"
-	"os"
-	//_log "log"
-	"github.com/sufo/bailu-admin/app/config"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -164,26 +164,46 @@ func InitMonitor(logger *zap.SugaredLogger) func() {
 func InitHTTPServer(handler http.Handler, logger *zap.SugaredLogger) {
 	cfg := config.Conf.Server
 	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
-	s := endless.NewServer(addr, handler)
-	s.WriteTimeout = time.Duration(cfg.WriterTimeout) * time.Second
-	s.ReadTimeout = time.Duration(cfg.ReadTimeout) * time.Second
-	s.MaxHeaderBytes = 1 << 20 //请求头最大1M
-	s.BeforeBegin = func(add string) {
-		//_log.Printf("Actual pid is %d", syscall.Getpid())
-		logger.Info("addr:", addr)
+
+	srv := &http.Server{
+		Addr:           addr,
+		Handler:        handler,
+		WriteTimeout:   time.Duration(cfg.WriterTimeout) * time.Second,
+		ReadTimeout:    time.Duration(cfg.ReadTimeout) * time.Second,
+		MaxHeaderBytes: 1 << 20, // 1MB
 	}
 
-	var err error
-	if cfg.CertFile != "" && cfg.KeyFile != "" {
-		s.TLSConfig = &tls.Config{MinVersion: tls.VersionTLS12}
-		err = s.ListenAndServeTLS(cfg.CertFile, cfg.KeyFile)
-	} else {
-		err = s.ListenAndServe()
+	go func() {
+		logger.Info("Listening and serving HTTP on ", addr)
+		var err error
+		if cfg.CertFile != "" && cfg.KeyFile != "" {
+			srv.TLSConfig = &tls.Config{MinVersion: tls.VersionTLS12}
+			err = srv.ListenAndServeTLS(cfg.CertFile, cfg.KeyFile)
+		} else {
+			err = srv.ListenAndServe()
+		}
+		if err != nil && err != http.ErrServerClosed {
+			logger.Fatalf("HTTP server ListenAndServe error: %v", err)
+		}
+	}()
+
+	// Wait for interrupt signal to gracefully shutdown the server with
+	// a timeout of 5 seconds.
+	quit := make(chan os.Signal, 1)
+	// kill (no param) default send syscall.SIGTERM
+	// kill -2 is syscall.SIGINT
+	// kill -9 is syscall.SIGKILL but can't be caught
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	logger.Info("Shutting down server...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := srv.Shutdown(ctx); err != nil {
+		logger.Fatal("Server forced to shutdown: ", err)
 	}
-	//err := s.ListenAndServe()
-	if err != nil && err != http.ErrServerClosed {
-		logger.Errorf("HTTP server ListenAndServe error: %v", err)
-	}
+	logger.Info("Server exiting")
 }
 
 func Run(ctx context.Context, opts ...Opt) error {

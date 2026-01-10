@@ -1,9 +1,9 @@
 package log
 
 import (
-	"github.com/sufo/bailu-admin/app/config"
 	"fmt"
 	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/sufo/bailu-admin/app/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"
@@ -61,7 +61,7 @@ func InitLogger() (*zap.SugaredLogger, func(), error) {
 
 	// Assign to the global logger for backward compatibility
 	L = logger.Sugar()
-	
+
 	// Also return the instance for dependency injection
 	return L, clearFunc, err
 }
@@ -89,7 +89,7 @@ func getEncoderConfig() zapcore.EncoderConfig {
 	default:
 		encoderConfig.EncodeLevel = zapcore.LowercaseColorLevelEncoder // Default to color
 	}
-	
+
 	encoderConfig.ConsoleSeparator = "  "
 
 	return encoderConfig
@@ -123,7 +123,7 @@ func GetWriterSyncer() (zapcore.WriteSyncer, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	
+
 	clearFunc := func() {
 		if fileWriter != nil {
 			_ = fileWriter.Close()

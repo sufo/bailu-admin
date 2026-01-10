@@ -17,7 +17,7 @@ import (
 func InitCasbin(adapter persist.Adapter) (*casbin.SyncedEnforcer, func(), error) {
 	cfg := config.Conf.Casbin
 	if cfg.Model == "" {
-		return new(casbin.SyncedEnforcer), nil, nil
+		return new(casbin.SyncedEnforcer), func() {}, nil
 	}
 	e, err := casbin.NewSyncedEnforcer(cfg.Model)
 	if err != nil {
