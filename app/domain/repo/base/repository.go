@@ -8,15 +8,15 @@
 package base
 
 import (
+	"context"
+	"database/sql"
+	"fmt"
 	"github.com/sufo/bailu-admin/app/core/appctx"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/repo/util"
 	"github.com/sufo/bailu-admin/app/domain/resp"
 	"github.com/sufo/bailu-admin/pkg/log"
 	"github.com/sufo/bailu-admin/utils/page"
-	"context"
-	"database/sql"
-	"fmt"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"reflect"
@@ -120,7 +120,7 @@ func (r *Repository[T]) FindByBuilder(ctx context.Context, builder *QueryBuilder
 		v := reflect.TypeOf(t)
 		//判断是否存在sort，存在则默认使用sort排序
 		if _, exist := v.FieldByName("Sort"); exist {
-			builder.WithOrder(fmt.Sprint(alias, "sort desc"))
+			builder.WithOrder(fmt.Sprint(alias, "sort asc"))
 		}
 	}
 

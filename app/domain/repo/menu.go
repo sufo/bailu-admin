@@ -9,11 +9,11 @@ package repo
 
 import (
 	"context"
-	"gorm.io/gorm"
 	"github.com/sufo/bailu-admin/app/domain/dto"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/repo/base"
 	"github.com/sufo/bailu-admin/app/domain/repo/util"
+	"gorm.io/gorm"
 )
 
 // var MenuSet = wire.NewSet(wire.Struct(new(MenuRepo), "*"))
@@ -72,7 +72,7 @@ func (m *MenuRepo) FindByRolesAndTypeNot(ctx context.Context, roleIds []uint64, 
 func (m *MenuRepo) FindMenus(ctx context.Context, params dto.MenuParams) ([]*entity.Menu, error) {
 	builder := base.NewQueryBuilder()
 	builder.WithWhereStruct(params).WithPreload("Apis").
-		WithOrder("sys_menu.pid", "sys_menu.sort desc").
+		WithOrder("sys_menu.pid", "sys_menu.sort asc").
 		WithOrder("created_at")
 
 	menus, err := m.FindByBuilder(ctx, builder)
@@ -87,7 +87,7 @@ func (m *MenuRepo) FindMenusByUserId(ctx context.Context, userId uint64, params 
 		WithJoin("left join sys_role r on r.id=ur.role_id").
 		WithWhere("ur.user_id=?", userId).
 		WithWhereStructAndAlias(params, "m").
-		WithOrder("m.pid", "m.sort desc")
+		WithOrder("m.pid", "m.sort asc")
 	menus, err := m.FindByBuilder(ctx, builder)
 	return menus.([]*entity.Menu), err
 }
@@ -108,7 +108,7 @@ func (m *MenuRepo) FindByRoleId(ctx context.Context, roleId uint64) ([]uint64, e
 		db = db.Where("sys_menu.id not in (select pid from sys_menu m inner join sys_role_menu rm ON rm.menu_id = sys_menu.ID and rm.role_id=?)", roleId)
 	}
 
-	err := db.Order("sys_menu.pid ASC, sys_menu.sort desc").Find(&menus).Error
+	err := db.Order("sys_menu.pid ASC, sys_menu.sort asc").Find(&menus).Error
 	return menus, err
 }
 
@@ -117,6 +117,6 @@ func (m *MenuRepo) FindByRoleIds(ctx context.Context, roleIds []uint64) ([]*enti
 	db := util.GetDBWithModel[entity.Menu](ctx, m.DB)
 	err := db.Joins("JOIN sys_role_menu rm ON rm.menu_id = sys_menu.id").
 		Where("rm.role_id in ?", roleIds).
-		Order("sys_menu.pid ASC, m.sort desc").Find(&menus).Error
+		Order("sys_menu.pid ASC, m.sort asc").Find(&menus).Error
 	return menus, err
 }
