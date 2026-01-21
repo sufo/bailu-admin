@@ -82,13 +82,29 @@ func (m *MenuRepo) FindMenus(ctx context.Context, params dto.MenuParams) ([]*ent
 func (m *MenuRepo) FindMenusByUserId(ctx context.Context, userId uint64, params dto.MenuParams) ([]*entity.Menu, error) {
 	builder := base.NewQueryBuilder()
 	builder.WithTable("sys_menu m").WithPreload("Apis").
-		WithJoin("left join sys_role_menu mr on rm.menu_id=m.id").
+		WithJoin("left join sys_role_menu rm on rm.menu_id=m.id").
 		WithJoin("left join sys_user_role ur on rm.role_id=ur.role_id").
 		WithJoin("left join sys_role r on r.id=ur.role_id").
 		WithWhere("ur.user_id=?", userId).
 		WithWhereStructAndAlias(params, "m").
 		WithOrder("m.pid", "m.sort asc")
 	menus, err := m.FindByBuilder(ctx, builder)
+	return menus.([]*entity.Menu), err
+}
+
+// 通过roles和 MenuParams查询菜单
+func (m *MenuRepo) FindByRolesAndParam(ctx context.Context, roleIds []uint64, params dto.MenuParams) ([]*entity.Menu, error) {
+	builder := base.NewQueryBuilder()
+	builder.WithTable("sys_menu m").WithPreload("Apis").
+		WithJoin("JOIN sys_role_menu rm ON rm.menu_id = m.id").
+		WithWhere("rm.role_id IN ?", roleIds).
+		WithWhereStructAndAlias(params, "m"). // Apply additional filters from dto.MenuParams
+		WithOrder("m.pid", "m.sort asc")      // Consistent ordering
+
+	menus, err := m.FindByBuilder(ctx, builder)
+	if err != nil {
+		return nil, err
+	}
 	return menus.([]*entity.Menu), err
 }
 
@@ -117,6 +133,6 @@ func (m *MenuRepo) FindByRoleIds(ctx context.Context, roleIds []uint64) ([]*enti
 	db := util.GetDBWithModel[entity.Menu](ctx, m.DB)
 	err := db.Joins("JOIN sys_role_menu rm ON rm.menu_id = sys_menu.id").
 		Where("rm.role_id in ?", roleIds).
-		Order("sys_menu.pid ASC, m.sort asc").Find(&menus).Error
+		Order("sys_menu.pid ASC, sys_menu.sort asc").Find(&menus).Error
 	return menus, err
 }

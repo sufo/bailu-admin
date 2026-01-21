@@ -1,10 +1,3 @@
-/**
- * Create by sufo
- * @Email ouamour@Gmail.com
- *
- * @Desc menus
- */
-
 package sys
 
 import (
@@ -96,7 +89,12 @@ func (m *MenuService) FindMenuList(c *gin.Context, params dto.MenuParams) ([]*en
 	if userDto.IsSuper() {
 		return m.MenuRepo.FindMenus(ctx, params)
 	} else {
-		return m.MenuRepo.FindMenusByUserId(ctx, userDto.ID, params)
+		//return m.MenuRepo.FindMenusByUserId(ctx, userDto.ID, params)
+		roleIds := make([]uint64, len(userDto.Roles))
+		for _, role := range userDto.Roles {
+			roleIds = append(roleIds, role.ID)
+		}
+		return m.MenuRepo.FindByRolesAndParam(ctx, roleIds, params)
 	}
 }
 
