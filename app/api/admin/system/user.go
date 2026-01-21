@@ -8,6 +8,10 @@
 package system
 
 import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/google/wire"
+	"github.com/jinzhu/copier"
 	"github.com/sufo/bailu-admin/app/api/admin"
 	"github.com/sufo/bailu-admin/app/config"
 	"github.com/sufo/bailu-admin/app/domain/dto"
@@ -25,10 +29,6 @@ import (
 	"github.com/sufo/bailu-admin/pkg/store"
 	"github.com/sufo/bailu-admin/utils"
 	"github.com/sufo/bailu-admin/utils/page"
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/google/wire"
-	"github.com/jinzhu/copier"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
 )
@@ -340,7 +340,7 @@ func (u *UserApi) Register(c *gin.Context) {
 		resp.FailWithMsg(c, i18n.DefTr("admin.AccountOrPwdErr"))
 		return
 	}
-	//密码强度校验
+	//码强度校验
 	if !utils.PasswordStrength(decryptStr) {
 		resp.FailWithMsg(c, i18n.DefTr("tip.pwdFormatTip", 6, 18, 2))
 		return

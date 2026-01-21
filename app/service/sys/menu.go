@@ -295,17 +295,22 @@ func (m *MenuService) Save(ctx context.Context, menu entity.Menu) error {
 	}
 	checkIsFrame(&menu)
 	if *menu.Type == "F" { //是按钮
-		return m.TranRepo.Exec(ctx, func(ctx context.Context) error {
-			err := m.MenuRepo.Create(ctx, &menu)
-			if err != nil {
-				return err
-			}
-			//插入按钮和api映射关系
-			for _, api := range menu.Apis {
-				api.MenuId = menu.ID
-			}
-			return m.MenuApiRepo.Create(ctx, menu.Apis)
-		})
+		if menu.Apis == nil {
+			return m.MenuRepo.Create(ctx, &menu)
+		} else {
+			return m.TranRepo.Exec(ctx, func(ctx context.Context) error {
+				err := m.MenuRepo.Create(ctx, &menu)
+				if err != nil {
+					return err
+				}
+				//插入按钮和api映射关系
+				for _, api := range menu.Apis {
+					api.MenuId = menu.ID
+				}
+				return m.MenuApiRepo.Create(ctx, menu.Apis)
+			})
+		}
+
 	} else { //不是按钮
 		return m.MenuRepo.Create(ctx, &menu)
 	}

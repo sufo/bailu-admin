@@ -8,6 +8,7 @@
 package system
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"github.com/sufo/bailu-admin/app/api/admin"
@@ -111,6 +112,7 @@ func (r *RoleApi) Edit(c *gin.Context) {
 
 	var role dto.Role
 	if err := c.ShouldBindJSON(&role); err != nil {
+		fmt.Printf("err:%v", err)
 		panic(respErr.BadRequestError)
 	}
 

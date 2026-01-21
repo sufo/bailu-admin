@@ -22,7 +22,7 @@ type RoleParams struct {
 }
 
 type Role struct {
-	ID             uint64   `json:"id,string" form:"id,string"`
+	ID             uint64   `json:"id" form:"id"`
 	Name           string   `json:"name" form:"name" binding:"required"`
 	RoleKey        string   `json:"roleKey" form:"roleKey" binding:"required"`
 	DataScope      string   `json:"dataScope" form:"dataScope"`
@@ -31,7 +31,9 @@ type Role struct {
 	Sort           uint     `json:"sort" form:"sort"`
 	Status         uint8    `json:"status" form:"status" binding:"required"`
 	Remark         string   `json:"remark" form:"remark"`
-	IsMenusChanged bool     `json:"isMenusChanged" form:"isMenusChanged"`
+	IsMenusChanged       bool     `json:"isMenusChanged" form:"isMenusChanged"`
+	MenuCheckStrictly    bool     `json:"menuCheckStrictly" form:"menuCheckStrictly"`
+	DeptCheckStrictly    bool     `json:"deptCheckStrictly" form:"deptCheckStrictly"`
 }
 
 type RoleDataScope struct {

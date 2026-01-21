@@ -60,7 +60,7 @@ func (r *Router) RegisterAPI(app *gin.Engine) {
 	{
 		gUser.GET("info", "用户信息", "获取当前用户信息", r.UserApI.GetInfo)
 		gUser.POST("logout", "退出登录", "", r.UserApI.Logout)
-		gUser.GET("", "退出登录", "", r.UserApI.Index)
+		gUser.GET("", "用户列表", "", r.UserApI.Index)
 		gUser.PUT("", "编辑用户", "", r.UserApI.Edit)
 		gUser.POST("", "创建用户", "", r.UserApI.Create)
 		gUser.PATCH("status", "启用/禁用用户", "", r.UserApI.Status)
@@ -81,15 +81,15 @@ func (r *Router) RegisterAPI(app *gin.Engine) {
 	_gMenu := g.Group("/menu")
 	gMenu := NewResourceRouterGroup(_gMenu, "菜单", &ResourceRoutes)
 	{
-		gMenu.GET("", "", "", r.MenuApi.Index)
-		gMenu.GET("menus", "", "", r.MenuApi.Menus)
-		gMenu.GET("routes", "", "", r.MenuApi.Routes)
-		gMenu.GET(":menuId", "", "", r.MenuApi.SubMenus)
-		gMenu.DELETE(":menuId", "", "", r.MenuApi.Destroy)
-		gMenu.POST("", "", "", r.MenuApi.Create)
-		gMenu.PATCH("", "", "", r.MenuApi.Edit)
-		gMenu.GET("tree", "", "", r.MenuApi.Tree)
-		gMenu.GET("tree/:roleId", "", "", r.MenuApi.TreeSelect)
+		gMenu.GET("", "菜单列表", "", r.MenuApi.Index)
+		gMenu.GET("menus", "获取菜单树(不包含按钮)", "", r.MenuApi.Menus)
+		gMenu.GET("routes", "获取动态路由", "", r.MenuApi.Routes)
+		gMenu.GET(":menuId", "获取子菜单树", "", r.MenuApi.SubMenus)
+		gMenu.DELETE(":menuId", "删除菜单", "", r.MenuApi.Destroy)
+		gMenu.POST("", "创建菜单", "", r.MenuApi.Create)
+		gMenu.PATCH("", "编辑菜单", "", r.MenuApi.Edit)
+		gMenu.GET("tree", "菜单权限(角色模块使用)", "", r.MenuApi.Tree)
+		gMenu.GET("tree/:roleId", "角色菜单树", "", r.MenuApi.TreeSelect)
 	}
 
 	_gDept := g.Group("/dept")
@@ -143,7 +143,7 @@ func (r *Router) RegisterAPI(app *gin.Engine) {
 	gDictItem := NewResourceRouterGroup(_gDictItem, "字典项", &ResourceRoutes)
 	{
 		gDictItem.POST("", "创建字典项", "", r.DictItemApi.Create)
-		gDictItem.PUT("", "", "编辑字典项", r.DictItemApi.Edit)
+		gDictItem.PUT("", "编辑字典项", "", r.DictItemApi.Edit)
 		gDictItem.DELETE(":ids", "删除字典项", "", r.DictItemApi.Destroy)
 		gDictItem.GET("options", "字典项下拉列表", "", r.DictItemApi.Options)
 		gDictItem.PATCH("status", "编辑字典项状态", "", r.DictItemApi.Status)

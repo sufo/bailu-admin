@@ -11,12 +11,14 @@ var _ IModel = (*Role)(nil)
 
 type Role struct {
 	//ID        uint64 `json:"id,string" gorm:"primarykey"`
-	ID        uint64 `json:"id" gorm:"primarykey"`
-	Name      string `json:"name" gorm:"size:30;not null;comment:角色名称"`
-	RoleKey   string `json:"roleKey" gorm:"size:100;not null;comment:角色权限字符"`
-	DataScope string `json:"dataScope" gorm:"type:tinyint(1);default:1;comment:数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限 5:仅本人）"`
-	Menus     []Menu `json:"-" gorm:"many2many:sys_role_menu;comment:权限菜单"`
-	Depts     []Dept `json:"-" gorm:"many2many:sys_role_dept;"` //数据权限
+	ID                uint64 `json:"id" gorm:"primarykey"`
+	Name              string `json:"name" gorm:"size:30;not null;comment:角色名称"`
+	RoleKey           string `json:"roleKey" gorm:"size:100;not null;comment:角色权限字符"`
+	DataScope         string `json:"dataScope" gorm:"type:tinyint(1);default:1;comment:数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限 5:仅本人）"`
+	MenuCheckStrictly bool   `json:"menuCheckStrictly" gorm:"default:false;comment:菜单是否父子不关联"`
+	DeptCheckStrictly bool   `json:"deptCheckStrictly" gorm:"default:false;comment:部门是否父子不关联"`
+	Menus             []Menu `json:"-" gorm:"many2many:sys_role_menu;comment:权限菜单"`
+	Depts             []Dept `json:"-" gorm:"many2many:sys_role_dept;"` //数据权限
 	SortAndStatus
 	Remark string `json:"remark" gorm:"size:500;comment:描述"`
 	BaseEntity

@@ -8,6 +8,8 @@
 package system
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/google/wire"
 	"github.com/sufo/bailu-admin/app/api/admin"
 	"github.com/sufo/bailu-admin/app/domain/dto"
 	"github.com/sufo/bailu-admin/app/domain/entity"
@@ -16,8 +18,6 @@ import (
 	respErr "github.com/sufo/bailu-admin/pkg/exception"
 	"github.com/sufo/bailu-admin/pkg/i18n"
 	"github.com/sufo/bailu-admin/pkg/log"
-	"github.com/gin-gonic/gin"
-	"github.com/google/wire"
 	"strconv"
 )
 
@@ -36,7 +36,7 @@ type MenuApi struct {
 // @Param Authorization header string true "Bearer 用户令牌"
 // @Param query query dto.MenuParams false "查询参数"
 // ////@response default {object} resp.Response{data=resp.PageResult[entity.Menu]}
-// @response default {object} resp.Response[resp.PageResult[entity.Menu]]
+// @response default {object} resp.Response[[]entity.Menu]
 // @Success 200 {object} resp.Response[any]
 // @Router /api/menu [get]
 // @Security Bearer

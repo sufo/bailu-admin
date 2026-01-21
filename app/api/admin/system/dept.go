@@ -8,6 +8,8 @@
 package system
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/google/wire"
 	"github.com/sufo/bailu-admin/app/api/admin"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/resp"
@@ -15,8 +17,6 @@ import (
 	respErr "github.com/sufo/bailu-admin/pkg/exception"
 	"github.com/sufo/bailu-admin/pkg/i18n"
 	"github.com/sufo/bailu-admin/pkg/log"
-	"github.com/gin-gonic/gin"
-	"github.com/google/wire"
 	"strconv"
 )
 
@@ -35,7 +35,8 @@ type DeptApi struct {
 // @Param Authorization header string true "Bearer 用户令牌"
 // @Param name query string false "部门名称"
 // @Param status query string false "状态（1:启动，2:禁用）"
-// //@Success 200 {object} resp.Response[resp.PageResult[entity.Dept]]
+// //@Success 200 {object} resp.Response[entity.Dept]
+// @response default {object} resp.Response[[]entity.Dept]
 // @Router /api/dept [get]
 // @Security Bearer
 func (d *DeptApi) Index(c *gin.Context) {

@@ -93,13 +93,22 @@ func (m *MenuRepo) FindMenusByUserId(ctx context.Context, userId uint64, params 
 }
 
 func (m *MenuRepo) FindByRoleId(ctx context.Context, roleId uint64) ([]uint64, error) {
+	var role entity.Role
+	if err := m.DB.WithContext(ctx).First(&role, roleId).Error; err != nil {
+		return nil, err
+	}
+
 	var menus []uint64
 	db := util.GetDBWithModel[entity.Menu](ctx, m.DB)
 	db = db.Select("id").Joins("LEFT JOIN sys_role_menu rm ON rm.menu_id = sys_menu.ID")
-	err := db.Where("rm.role_id=?", roleId).
-		//级联选择，则排除pid
-		Where("sys_menu.id not in (select pid from sys_menu m inner join sys_role_menu rm ON rm.menu_id = sys_menu.ID and rm.role_id=?)", roleId).
-		Order("sys_menu.pid ASC, sys_menu.sort desc").Find(&menus).Error
+	db = db.Where("rm.role_id=?", roleId)
+
+	// if menuCheckStrictly is false, it means cascade selection, so exclude parent nodes
+	if !role.MenuCheckStrictly {
+		db = db.Where("sys_menu.id not in (select pid from sys_menu m inner join sys_role_menu rm ON rm.menu_id = sys_menu.ID and rm.role_id=?)", roleId)
+	}
+
+	err := db.Order("sys_menu.pid ASC, sys_menu.sort desc").Find(&menus).Error
 	return menus, err
 }
 
