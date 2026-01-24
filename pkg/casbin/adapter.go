@@ -13,9 +13,11 @@ import (
 	"github.com/casbin/casbin/v2/model"
 	"github.com/casbin/casbin/v2/persist"
 	"github.com/google/wire"
+	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/repo"
 	"github.com/sufo/bailu-admin/app/domain/repo/base"
 	"github.com/sufo/bailu-admin/pkg/log"
+	"strings"
 )
 
 var _ persist.Adapter = (*CasbinAdapter)(nil)
@@ -62,11 +64,11 @@ var CasbinAdapterSet = wire.NewSet(wire.Struct(new(CasbinAdapter), "*"), wire.Bi
 func (a *CasbinAdapter) LoadRolePolicy(ctx context.Context, m model.Model) error {
 
 	builder := base.NewQueryBuilder()
-	builder.WithJoin("left join sys_user_role as ur on ur.role_id=sys_role.id").
+	builder.WithPreload("Menus", "type != ?", "M").
+		WithJoin("left join sys_user_role as ur on ur.role_id=sys_role.id").
 		WithJoin("left join sys_user as u on u.id=ur.user_id").
 		WithJoin("left join sys_dept as d on d.id=u.dept_id").
-		WithWhere("status=1").
-		WithWhere("type != ?", "M").
+		WithWhere("sys_role.status=1").
 		WithDataScope(ctx, "d", "u").
 		WithPagination(ctx)
 
@@ -79,14 +81,42 @@ func (a *CasbinAdapter) LoadRolePolicy(ctx context.Context, m model.Model) error
 	}
 	for _, r := range roles {
 		for _, menu := range r.Menus {
-			if menu.Path == "" && len(menu.Apis) == 0 {
-				continue
-			}
-			if menu.Path != "" {
-				line := fmt.Sprintf("p,%d,%s,%s", r.ID, menu.Path, "GET")
-				persist.LoadPolicyLine(line, m)
+			// 1. Process permission identifier (e.g., "sys:user:list") to generate policy by convention
+			if menu.Permission != nil && *menu.Permission != "" {
+				key := *menu.Permission
+				parts := strings.Split(key, ":")
+				if len(parts) == 3 {
+					resource := parts[1]
+					action := parts[2]
 
+					var method, path string
+					// Convention: API path is /api/{resource}
+					path = "/api/" + resource
+
+					switch action {
+					case "list", "query", "get":
+						method = "GET"
+					case "add", "create":
+						method = "POST"
+					case "edit", "update":
+						method = "PUT"
+					case "delete", "remove":
+						method = "DELETE"
+					}
+
+					if method != "" {
+						line := fmt.Sprintf("p,%d,%s,%s", r.ID, path, method)
+						persist.LoadPolicyLine(line, m)
+					}
+				}
 			}
+
+			//if menu.Path != "" {
+			//	line := fmt.Sprintf("p,%d,%s,%s", r.ID, menu.Path, "GET")                                                                                                  │
+			//	persist.LoadPolicyLine(line, m)
+			//}
+
+			// 2. Process explicitly bound APIs (for buttons)
 			for _, api := range menu.Apis {
 				line := fmt.Sprintf("p,%d,%s,%s", r.ID, api.Path, api.Method)
 				persist.LoadPolicyLine(line, m)
@@ -98,7 +128,8 @@ func (a *CasbinAdapter) LoadRolePolicy(ctx context.Context, m model.Model) error
 
 // Load user policy (g,user_id,role_id)
 func (a *CasbinAdapter) LoadUserPolicy(ctx context.Context, m model.Model) error {
-	users, err := a.UserRepo.FindBy(ctx, "status=1")
+	var users []*entity.User
+	err := a.UserRepo.DB.WithContext(ctx).Preload("Roles").Where("status = ?", 1).Find(&users).Error
 	if err != nil {
 		return err
 	}

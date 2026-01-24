@@ -90,7 +90,7 @@ func (m *MenuService) FindMenuList(c *gin.Context, params dto.MenuParams) ([]*en
 		return m.MenuRepo.FindMenus(ctx, params)
 	} else {
 		//return m.MenuRepo.FindMenusByUserId(ctx, userDto.ID, params)
-		roleIds := make([]uint64, len(userDto.Roles))
+		roleIds := make([]uint64, 0, len(userDto.Roles))
 		for _, role := range userDto.Roles {
 			roleIds = append(roleIds, role.ID)
 		}

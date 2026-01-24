@@ -8,14 +8,15 @@
 package middleware
 
 import (
+	"encoding/json"
+	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/sufo/bailu-admin/app/config"
 	"github.com/sufo/bailu-admin/app/core/appctx"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/resp"
 	"github.com/sufo/bailu-admin/global/consts"
 	"github.com/sufo/bailu-admin/pkg/jwt"
-	"encoding/json"
-	"github.com/gin-gonic/gin"
 )
 
 func AuthMiddleware(provider *jwt.JwtProvider, skippers ...SkipperFunc) gin.HandlerFunc {
@@ -60,6 +61,14 @@ func AuthMiddleware(provider *jwt.JwtProvider, skippers ...SkipperFunc) gin.Hand
 		//缓存到gin Context中
 		c.Set(consts.REQUEST_USER, &onlineUser)
 		c.Set(consts.REQ_TOKEN, token)
+		vvv, exist := c.Get(consts.REQUEST_USER)
+		if exist {
+			fmt.Printf("user: %v", vvv)
+		} else {
+			fmt.Printf("user not exist")
+		}
+		fmt.Println()
+
 		//保存到全局context
 		ctx := appctx.SetAuth(c.Request.Context(), &onlineUser)
 		//为了在gorm的hook函数中使用

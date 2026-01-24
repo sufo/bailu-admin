@@ -45,8 +45,14 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		UserRepo: userRepo,
 		RoleRepo: roleRepo,
 	}
-	syncedEnforcer, cleanup2, err := InitCasbin(casbinAdapter)
+	sugaredLogger, cleanup2, err := log.InitLogger()
 	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	syncedEnforcer, cleanup3, err := InitCasbin(casbinAdapter, sugaredLogger)
+	if err != nil {
+		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
@@ -93,6 +99,7 @@ func BuildInjector(www string) (*Injector, func(), error) {
 	}
 	aliyunClient, err := sms.New()
 	if err != nil {
+		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
@@ -243,12 +250,6 @@ func BuildInjector(www string) (*Injector, func(), error) {
 		UploadApi:     uploadApi,
 		Message:       mineMessage,
 		FileApi:       fileApi,
-	}
-	sugaredLogger, cleanup3, err := log.InitLogger()
-	if err != nil {
-		cleanup2()
-		cleanup()
-		return nil, nil, err
 	}
 	engine := core.InitRouter(routerRouter, sugaredLogger, www)
 	scheduleNotice := jobs.NewScheduleNotice(noticeService)

@@ -54,7 +54,7 @@ type Router struct {
 
 func (r *Router) Prefixes() []string {
 	return []string{
-		"/api/",
+		"/api",
 	}
 }
 

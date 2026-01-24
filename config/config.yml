@@ -223,7 +223,7 @@ oper-log:
 casbin:
   enable: true  #是否开启
   debug: false # debug
-  model: "" #模型文件
+  model: "config/model.conf" #模型文件
   # 是否启用定期自动加载策略
   auto-load: false
   # 定期自动加载策略时间间隔（单位秒）

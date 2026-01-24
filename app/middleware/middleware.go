@@ -8,12 +8,12 @@
 package middleware
 
 import (
+	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/resp"
 	"github.com/sufo/bailu-admin/global/consts"
 	jwtProvider "github.com/sufo/bailu-admin/pkg/jwt"
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"strings"
 )
 

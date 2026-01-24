@@ -11,10 +11,11 @@ import (
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/persist"
 	"github.com/sufo/bailu-admin/app/config"
+	"go.uber.org/zap"
 	"time"
 )
 
-func InitCasbin(adapter persist.Adapter) (*casbin.SyncedEnforcer, func(), error) {
+func InitCasbin(adapter persist.Adapter, logger *zap.SugaredLogger) (*casbin.SyncedEnforcer, func(), error) {
 	cfg := config.Conf.Casbin
 	if cfg.Model == "" {
 		return new(casbin.SyncedEnforcer), func() {}, nil

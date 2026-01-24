@@ -39,27 +39,35 @@ func (r *Router) RegisterAPI(app *gin.Engine) {
 	}
 
 	g.Use(middleware.AuthMiddleware(r.TokenProvider,
-		middleware.AllowPathPrefixSkipper("/admin/auth/"),
+		middleware.AllowPathPrefixSkipper("/api/admin/auth/"),
 	))
 
 	//操作日志 //要放在AuthMiddleware路由之后
 	if config.Conf.OperLog.Enable {
 		g.Use(middleware.OperationMiddleware(
 			r.OperApi.OperSrv,
-			middleware.AllowPathPrefixSkipper("/admin/login", "/admin/captcha", "/admin/oper"),
+			middleware.AllowPathPrefixSkipper("/api/admin/login", "/api/admin/captcha", "/api/admin/oper"),
 		))
 	}
 
 	//解锁屏幕
 	g.POST("unlock", r.AuthAPI.UnLock)
+
 	//casbin
-	g.Use(middleware.CasbinMiddleware(r.Enforcer))
+	g.Use(middleware.CasbinMiddleware(r.Enforcer,
+		middleware.AllowPathPrefixSkipper("/api/user/logout", "/api/user/avatar", "/api/user/profile", "/api/user/changePwd", "/api/user/info"),
+		middleware.AllowPathPrefixSkipper("/api/mine", "/api/upload"),
+		middleware.AllowPathPrefixSkipper("/api/menu/routes"),
+		middleware.AllowPathPrefixSkipper("/api/loginLog/findByUsername"),
+	))
 
 	_gUser := g.Group("/user")
 	gUser := NewResourceRouterGroup(_gUser, "用户", &ResourceRoutes)
 	{
-		gUser.GET("info", "用户信息", "获取当前用户信息", r.UserApI.GetInfo)
-		gUser.POST("logout", "退出登录", "", r.UserApI.Logout)
+		//gUser.GET("info", "用户信息", "获取当前用户信息", r.UserApI.GetInfo)
+		//gUser.POST("logout", "退出登录", "", r.UserApI.Logout)
+		_gUser.GET("info", r.UserApI.GetInfo)
+		_gUser.POST("logout", r.UserApI.Logout)
 		gUser.GET("", "用户列表", "", r.UserApI.Index)
 		gUser.PUT("", "编辑用户", "", r.UserApI.Edit)
 		gUser.POST("", "创建用户", "", r.UserApI.Create)
@@ -68,10 +76,10 @@ func (r *Router) RegisterAPI(app *gin.Engine) {
 		gUser.PUT("resetPasswordBySmsCode", "短信验证修改用户密码", "", r.UserApI.ResetPwdBySMSCode)
 		gUser.DELETE(":userIds", "批量删除用户", "", r.UserApI.Destroy)
 
-		//profile
-		gUser.POST("avatar", "上传头像", "上传头像", r.ProfileApi.UploadAvatar)
-		gUser.PUT("profile", "修改个人信息", "", r.ProfileApi.Edit)
-		gUser.PATCH("changePwd", "修改密码", "", r.ProfileApi.ChangePwd)
+		//profile, do not casbin
+		_gUser.POST("avatar", r.ProfileApi.UploadAvatar)
+		_gUser.PUT("profile", r.ProfileApi.Edit)
+		_gUser.PATCH("changePwd", r.ProfileApi.ChangePwd)
 	}
 
 	//g.Use(middleware.CasbinMiddleware(a.CasbinEnforcer,
@@ -83,7 +91,8 @@ func (r *Router) RegisterAPI(app *gin.Engine) {
 	{
 		gMenu.GET("", "菜单列表", "", r.MenuApi.Index)
 		gMenu.GET("menus", "获取菜单树(不包含按钮)", "", r.MenuApi.Menus)
-		gMenu.GET("routes", "获取动态路由", "", r.MenuApi.Routes)
+		//gMenu.GET("routes", "获取动态路由", "", r.MenuApi.Routes)
+		_gMenu.GET("routes", r.MenuApi.Routes)
 		gMenu.GET(":menuId", "获取子菜单树", "", r.MenuApi.SubMenus)
 		gMenu.DELETE(":menuId", "删除菜单", "", r.MenuApi.Destroy)
 		gMenu.POST("", "创建菜单", "", r.MenuApi.Create)
