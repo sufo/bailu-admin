@@ -25,7 +25,7 @@ COPY . .
 # RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -a -o bailu-admin main.go
 
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s -X main.Version=1.0.0" -o ${APP} main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s -X main.Version=0.1.0" -o ${APP} main.go
 
 
 FROM alpine
