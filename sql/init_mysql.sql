@@ -6,6 +6,15 @@
 
 
 CREATE DATABASE  IF NOT EXISTS `bailu-admin` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+-- 这里使用的是test用户，请自行修改，跟配置文件用户保持一致
+-- 2. 核心步骤：修正用户权限和加密插件
+-- 注意：MYSQL_USER 环境变量创建的用户默认可能无法在初始化阶段立即生效，
+-- 我们在这里显式赋予权限并强制降权插件，解决之前的 caching_sha2 报错。
+ALTER USER 'test'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+GRANT ALL PRIVILEGES ON `bailu-admin`.* TO 'test'@'%';
+FLUSH PRIVILEGES;
+
 USE `bailu-admin`;
 
 

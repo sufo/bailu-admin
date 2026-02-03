@@ -57,7 +57,7 @@ datasource:
   # 数据库类型 mysql，sqlite3， postgres
   mysql:
     driver: mysql
-    host : 127.0.0.1
+    host : db
     port : 3306
     username: test
     password: 123456
@@ -96,7 +96,7 @@ monitor:
   # 是否启用
   enable: false
   # HTTP的监听地址和端口
-  addr: 127.0.0.1:16060
+  addr: 0.0.0.0:16060
   # 配置文件目录(为空则使用默认目录)
   config-dir: ""
 
