@@ -1,6 +1,6 @@
 .PHONY: start build
 SHELL = /bin/bash
-APP = bailu-server
+APP = bailu-admin-api
 START_ARGS = --www public
 
 ifeq ($(TAGS_OPT),)
@@ -40,7 +40,7 @@ build-image-server:
 
 #本地环境打包后端
 build-server-local:
-	@cd if [ -f "bailu-server" ];then rm -rf ${APP}; else echo "OK!"; fi \
+	@cd if [ -f "bailu-admin-api" ];then rm -rf ${APP}; else echo "OK!"; fi \
     && go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct \
     && go env -w CGO_ENABLED=0 && go env  && go mod tidy \
     && go build -ldflags "-w -s" -o ${APP}

@@ -3,7 +3,7 @@ FROM golang:alpine AS builder
 
 LABEL MAINTAINER=ouamour@gmail.com
 
-ARG APP=bailu-server
+ARG APP=bailu-admin-api
 ARG VERSION=v0.1.0
 
 # ENV GOPROXY="https://goproxy.cn"
@@ -29,7 +29,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s -X main.Version=0.1.0" -o 
 
 
 FROM alpine
-ARG APP=bailu-server
+ARG APP=bailu-admin-api
 WORKDIR /bailu
 COPY --from=builder /build/${APP} ./
 COPY --from=builder /build/config ./config
@@ -38,5 +38,5 @@ COPY --from=builder /build/sql  ./sql
 COPY --from=builder /build/public  ./public
 COPY --from=builder /build/assets  ./assets
 
-ENTRYPOINT ["./bailu-server", "start" ,"--www", "public", "-c", "config/config.docker.yml"]
+ENTRYPOINT ["./bailu-admin-api", "start" ,"--www", "public", "-c", "config/config.docker.yml"]
 EXPOSE 8081
