@@ -105,8 +105,8 @@ func (r *UserRepo) FindByParams(ctx context.Context, params *dto.UserQueryParams
 ## Frontend Project
 
 - **Bailu Admin (Vue)**: A companion frontend project is under development. (Link to be added)
-- **Live Demo**: (Link to be added)
-- **Default Credentials**: `sufo` / `admin123`
+- **Live Demo**: https://bailu-admin.vercel.app
+- **Default Credentials**: `sufo` / `123456`
 
 ## 🚀 Getting Started
 

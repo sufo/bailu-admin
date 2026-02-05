@@ -105,8 +105,8 @@ func (r *UserRepo) FindByParams(ctx context.Context, params *dto.UserQueryParams
 ## 前端项目
 
 - **Bailu Admin (Vue)**: 配套的前端项目正在开发中。（链接待添加）
-- **在线演示**: （链接待添加）
-- **默认凭据**: `sufo` / `admin123`
+- **在线演示**: https://bailu-admin.vercel.app
+- **默认凭据**: `sufo` / `123456`
 
 ## 🚀 快速开始
 
