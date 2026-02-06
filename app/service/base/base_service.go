@@ -7,12 +7,12 @@
 package base
 
 import (
+	"context"
 	"github.com/sufo/bailu-admin/app/config"
 	"github.com/sufo/bailu-admin/app/domain/entity"
 	"github.com/sufo/bailu-admin/app/domain/repo/base"
 	"github.com/sufo/bailu-admin/global/consts"
 	respErr "github.com/sufo/bailu-admin/pkg/exception"
-	"context"
 	"net/http"
 )
 
@@ -49,11 +49,16 @@ func (b *BaseService[T]) ContainSuper(ctx context.Context, userIds []uint64) boo
 }
 
 func ReqSchema(r *http.Request) string {
-	scheme := "http"
-	if r.TLS != nil {
-		scheme = "https"
+	// Check for the X-Forwarded-Proto header first, which is the standard for reverse proxies.
+	if proto := r.Header.Get("X-Forwarded-Proto"); proto == "https" {
+		return "https"
 	}
-	return scheme
+	// Fallback for direct TLS connections.
+	if r.TLS != nil {
+		return "https"
+	}
+	// Default to http.
+	return "http"
 }
 
 // 获取文件url
