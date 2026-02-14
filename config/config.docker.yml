@@ -1,4 +1,4 @@
-version: 1.0.0
+version: 0.1.0
 
 server:
   # debug开发环境 test测试环境 release线上环境  同gin [/home/sufo/workspace/go/gopath/pkg/mod/github.com/gin-gonic/gin@v1.7.7/mode.go]
